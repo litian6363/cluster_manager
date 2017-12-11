@@ -5,7 +5,7 @@
 网页主程序
 """
 
-__author__ = 'Li Tian'
+__author__ = 'LiTian'
 
 import re
 import hashlib
@@ -25,10 +25,11 @@ app.config.update(dict(
     SQLALCHEMY_DATABASE_URI='mysql://root:root@localhost:3306/cluster_man?charset=utf8',
     COOKIE_NAME='YunrunClusterManagerSessionName',
 ))
-# flask config 文件（没有也不报错）
+# flask config 文件（没有也不警告）
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
+# 模板
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -42,10 +43,23 @@ class Users(db.Model):
 _re_email = re.compile(r'^(\w)+(\.\w)*@(\w)+((\.\w{2,3}){1,3})$')
 
 
+# 装饰器,检查cookie
+def check_user_cookie(re):
+    def decorator(func):
+        def wrapper(*arg, **kw):
+            cookie = re.cookies.get(app.config['COOKIE_NAME'])
+            user = cookie2user(app.config['COOKIE_NAME'], Users, cookie)
+            if not user:
+                return render_template('login.html', error='Login expired, please login again!')
+            return func(*arg, **kw)
+        return wrapper
+    return decorator
+
+
 @app.route('/')
+@check_user_cookie(request)
 def index():
-    mytcookie = request.cookies.get(app.config['COOKIE_NAME'])
-    return render_template('index.html', mytcookie)
+    return render_template('index.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -70,10 +84,10 @@ def signup():
             db.session.commit()
             flash('Signup complete!')
             # 设置 cookie 保存登陆信息
-            response = make_response()
-            response.set_cookie('COOKIE_NAME', user2cookie(new_use), max_age=21600)
+            response = make_response(redirect(url_for('index')))
+            response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], new_use), max_age=21600)
             new_use.password = '******'
-            return redirect(url_for('index'))
+            return response
     return render_template('signup.html', error=error)
 
 
@@ -86,7 +100,7 @@ def login():
             error = 'Null email or password!'
             return render_template('login.html', error=error)
         user = Users.query.filter_by(email=email).first()
-        if user:
+        if not user:
             error = 'Email not exist!'
             return render_template('login.html', error=error)
         email_password_key = '%s:%s:%s' % (email, password, 'add@2some#t6salts!')
@@ -95,16 +109,19 @@ def login():
             error = 'Invalid password '
             return render_template('login.html', error=error)
         # 设置 cookie 保存登陆信息
-        response = make_response()
-        response.set_cookie('COOKIE_NAME', user2cookie(user), max_age=21600)
+        response = make_response(render_template('index.html'))
+        response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], user), max_age=21600)
         user.password = '******'
-        return redirect(url_for('index'))
+        return response
     return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    response = make_response(render_template('login.html'))
+    response.delete_cookie(app.config['COOKIE_NAME'])
+    return response
+
+
 if __name__ == '__main__':
-    # 删除全部表，创建全部表
-    # db.drop_all()
-    # db.create_all()
-    app.before_request()
     app.run()

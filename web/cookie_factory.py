@@ -2,40 +2,39 @@
 # -*- coding: utf-8 -*-
 
 """
-制作和解释cookie
+在flask中制作和解释cookie
 """
 
-__author__ = 'Li Tian'
+__author__ = 'LiTian'
 
 
 import hashlib
 import logging
-from web.flaskr import app, Users
 
 
 # 根据user对象，制作cookie
-def user2cookie(user):
-    st = '%s^%s^%s' % (user.email, user.password, app.config['SECRET_KEY'])
+def user2cookie(key, user):
+    st = '%s^%s^%s' % (user.email, user.password, key)
     li = [user.email, hashlib.sha1(st.encode('utf-8')).hexdigest()]
     return '^'.join(li)
 
 
 # 解释cookie，返回user对象
-def cookie2user(cookie):
+def cookie2user(key, Users, cookie):
     if not cookie: return None
     try:
         li = cookie.split('^')
-        if len(li) != 3:
-            logging.info('invalid cookie length')
+        if len(li) != 2:
+            print('invalid cookie length')
             return None
         email, sha1 = li
-        user = Users.query.filter_by(Users.email == email).first()
-        if user:
-            logging.info('invalid cookie user')
+        user = Users.query.filter_by(email=email).first()
+        if not user:
+            print('invalid cookie user')
             return None
-        st = '%s^%s^%s' % (user.email, user.password, app.config['SECRET_KEY'])
+        st = '%s^%s^%s' % (user.email, user.password, key)
         if sha1 != hashlib.sha1(st.encode('utf-8')).hexdigest():
-            logging.info('invalid cookie sha1')
+            print('invalid cookie sha1')
             return None
         user.password = '******'
         return user
