@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% if __user__ %} <p>{{ __user__ }} {% endif %}
-<h1>这是主页</h1>
-</body>
-</html>
+{% extends "__base__.html" %}
+{% block content %}
+<p>这是主页</p>
+{% endblock %}

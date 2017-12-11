@@ -43,7 +43,7 @@ class Users(db.Model):
 _re_email = re.compile(r'^(\w)+(\.\w)*@(\w)+((\.\w{2,3}){1,3})$')
 
 
-# 装饰器,检查cookie
+# 装饰器,用cookie来检查用户登录，除了登陆界面，其他都要检查
 def check_user_cookie(re):
     def decorator(func):
         def wrapper(*arg, **kw):
@@ -51,6 +51,7 @@ def check_user_cookie(re):
             user = cookie2user(app.config['COOKIE_NAME'], Users, cookie)
             if not user:
                 return render_template('login.html', error='Login expired, please login again!')
+            re.__user__ = user
             return func(*arg, **kw)
         return wrapper
     return decorator
@@ -109,7 +110,7 @@ def login():
             error = 'Invalid password '
             return render_template('login.html', error=error)
         # 设置 cookie 保存登陆信息
-        response = make_response(render_template('index.html'))
+        response = make_response(redirect('/'))
         response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], user), max_age=21600)
         user.password = '******'
         return response

@@ -1,0 +1,22 @@
+
+
+ul {
+float:top;
+width:100%;
+padding:0;
+margin:0;
+list-style-type:none;
+}
+
+
+a:hover {background-color:lightgrey}
+li {display:inline}
+
+.top{
+    margin:0 auto;
+    width:100%;
+    height:80px;
+    background-color:lightgrey
+}
+
+li#right{ float: right}
