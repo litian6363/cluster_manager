@@ -12,15 +12,15 @@ import hashlib
 import logging
 
 
-# 根据user对象，制作cookie
 def user2cookie(key, user):
+    """根据user对象，制作cookie"""
     st = '%s^%s^%s' % (user.email, user.password, key)
     li = [user.email, hashlib.sha1(st.encode('utf-8')).hexdigest()]
     return '^'.join(li)
 
 
-# 解释cookie，返回user对象
 def cookie2user(key, Users, cookie):
+    """解释cookie，返回user对象"""
     if not cookie: return None
     try:
         li = cookie.split('^')

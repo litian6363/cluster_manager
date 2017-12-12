@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Yunrun Cluter Manager</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/mytcss.css') }}">
 </head>
 <body>
-    <h1><a href="/">Yunrun Cluter Manager</a></h1>
+    <h1><a href="/">Yunrun Cluster Manager</a></h1>
     <div class="top">
         <ul>
             <li><a href="#">监控页面</a></li>
             <li><a href="#">配置工具</a></li>
             {% if request.cookies.get('YunrunClusterManagerSessionName') %}
             <li id="right"><a href="#">{{ request.cookies.get('YunrunClusterManagerSessionName').split('^')[0] }}</a></li>
+            <li id="right"><a href="/signup">注册</a></li>
             <li id="right"><a href="/logout">登出</a></li>
             {% endif %}
          </ul>
@@ -21,7 +21,6 @@
 
     <div>
         {% block content %}
-
         {% endblock %}
     </div>
 

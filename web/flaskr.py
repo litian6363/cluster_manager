@@ -12,7 +12,7 @@ import hashlib
 from flask import Flask, request, g, redirect, url_for, abort, render_template, flash, make_response
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from web.cookie_factory import cookie2user, user2cookie
+from cookie_factory import cookie2user, user2cookie
 
 app = Flask(__name__)
 # flask-sqlalchemy的数据库配置
@@ -29,8 +29,8 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
-# 模板
 class Users(db.Model):
+    """用户模板"""
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=True)
@@ -43,8 +43,8 @@ class Users(db.Model):
 _re_email = re.compile(r'^(\w)+(\.\w)*@(\w)+((\.\w{2,3}){1,3})$')
 
 
-# 装饰器,用cookie来检查用户登录，除了登陆界面，其他都要检查
 def check_user_cookie(re):
+    """装饰器,用cookie来检查用户登录，除了登陆界面，其他都要检查"""
     def decorator(func):
         def wrapper(*arg, **kw):
             cookie = re.cookies.get(app.config['COOKIE_NAME'])
@@ -119,7 +119,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    response = make_response(render_template('login.html'))
+    response = make_response(redirect('login'))
     response.delete_cookie(app.config['COOKIE_NAME'])
     return response
 
