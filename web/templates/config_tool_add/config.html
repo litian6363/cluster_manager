@@ -1,0 +1,9 @@
+{% extends "config_base.html" %}
+{% block table_add %}
+
+<form action="{{ url_for('config_add', table=table) }}" method="POST">
+    <label for=""></label>
+    <input name="" type="">
+</form>
+
+{% endblock %}

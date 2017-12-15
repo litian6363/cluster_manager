@@ -1,0 +1,34 @@
+{% extends "config_base.html" %}
+{% block table_body %}
+
+<div class="table table-responsive">
+    <table class="table table-striped">
+
+        <p class="main_hard">
+            <label>{{ table }}</label>
+            <a href="{{ url_for('config_add', table=table) }}">新增</a>
+        </p>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>UserName</th>
+                <th>Password</th>
+                <th>CreateDate</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in data_list %}
+                <tr>
+                    <td>{{ row.ID }}</td>
+                    <td>{{ row.UserName }}</td>
+                    <td>******</td>
+                    <td>{{ row.CreateDate }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

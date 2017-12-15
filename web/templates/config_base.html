@@ -1,0 +1,39 @@
+{% extends "__base__.html" %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="/configtool/Config">Config<span class="sr-only">(current)</span></a></li>
+                <li><a href="/configtool/DB">DB</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="/configtool/Kafka">Kafka</a></li>
+                <li><a href="/configtool/KafkaHost">KafkaHost</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="/configtool/Program">Program</a></li>
+                <li><a href="/configtool/SSDB">SSDB</a></li>
+                <li><a href="/configtool/Users">Users</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+            {% block table_body %}
+            {% endblock %}
+
+            {% block table_add %}
+            {% endblock %}
+
+            
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

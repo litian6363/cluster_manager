@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ch">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +8,23 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="renderer" content="webkit">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Login view</title>
+    <title>登录界面</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="../../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../static/css/signin.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <!--[if lt IE 9]><script src="../../static/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../static/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -30,6 +32,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+
 
 <body>
 
@@ -46,24 +49,25 @@
 
     <div class="container">
         <form class="form-signin" action="{{ url_for('login') }}" method="post">
-            <h2 class="form-signin-heading">ClusterManager Login</h2>
+            <h2 class="form-signin-heading">聚类管理系统登录</h2>
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <strong>错误：</strong> {{ error }}
+            </div>
+            {% endif %}
+            <label for="inputName" class="sr-only">用户名</label>
+            <input name="username" type="text" id="inputName" class="form-control" placeholder="用户名" required autofocus>
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
 
-            {% if error %}<label type="error">Error: {{ error }}{% endif %}</label>
-
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Login</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">登录</button>
         </form>
 
     </div> <!-- /container -->
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
+    <script src="../../static/js/ie10-viewport-bug-workaround.js"></script>
 
 
 </body>
