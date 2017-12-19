@@ -1,0 +1,103 @@
+{% extends "config_base.html" %}
+{% block table_add %}
+
+<form action="{{ url_for('config_add_api', table=table) }}" method="post" class="form-horizontal">
+  <div class="form-group">
+    <h2>Kafka</h2>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputID" class="col-sm-2 control-label">ID</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="KafkaInputID" name="KafkaInputID" readonly>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputHostID" class="col-sm-2 control-label">HostID</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="KafkaInputHostID" name="KafkaInputHostID">
+        {% for row in kafkahost_all %}
+        <option value={{ row.ID }}>{{ row.ID }}:&nbsp{{ row.Host }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputCustomerTopic" class="col-sm-2 control-label">CustomerTopic</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputProducerTopic" class="col-sm-2 control-label">ProducerTopic</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputAnalyzeTopic" class="col-sm-2 control-label">AnalyzeTopic</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputGroupName" class="col-sm-2 control-label">GroupName</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">AutoCommit</label>
+    <div class="radio col-sm-10">
+      <label>
+        <input type="radio" name="KafkaInputAutoCommit" id="option1" value=0 checked>
+        否
+      </label>
+      <label>
+        <input type="radio" name="KafkaInputAutoCommit" id="option2" value=1>
+        是
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">FromBegin</label>
+    <div class="radio col-sm-10">
+      <label>
+        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption1" value=0 checked>
+        否
+      </label>
+      <label>
+        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption2" value=1>
+        是
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputDesc" class="col-sm-2 control-label">Desc</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="KafkaInputAddon" class="col-sm-2 control-label">Addon</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" readonly>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-success btn-lg right">提交</button>
+  </div>
+
+</form>
+
+{% endblock %}

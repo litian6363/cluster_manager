@@ -5,8 +5,7 @@
     <table class="table table-striped">
 
         <p class="main_hard">
-            <label>{{ table }}</label>
-            <a href="{{ url_for('config_add', table=table) }}">新增</a>
+            <label>Kafka主机配置</label>
         </p>
 
         <thead>
@@ -29,6 +28,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <p class="main_leg">
+        <a href="{{ url_for('config_add', table=table) }}" class="btn-lg btn-success">新增</a>
+    </p>
 </div>
 
 {% endblock %}

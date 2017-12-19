@@ -5,8 +5,7 @@
     <table class="table table-striped">
 
         <p class="main_hard">
-            <label>{{ table }}</label>
-            <a href="{{ url_for('config_add', table=table) }}">新增</a>
+            <label>{{ table }}配置</label>
         </p>
 
         <thead>
@@ -29,16 +28,21 @@
                 <tr>
                     <td>{{ row.ID }}</td>
                     <td>{{ row.HostID }}</td>
-                    <td>{{ row.KafakaHost }}</td>
-                    <td>{{ row.KafakaID }}</td>
-                    <td>{{ row.ProgramID }}</td>
-                    <td>{{ row.SSDBID }}</td>
-                    <td>{{ row.Sign }}</td>
+                    <td>{{ row.CustomerTopic }}</td>
+                    <td>{{ row.ProducerTopic }}</td>
+                    <td>{{ row.AnalyzeTopic }}</td>
+                    <td>{{ row.GroupName }}</td>
+                    <td>{{ row.AutoCommit }}</td>
+                    <td>{{ row.FromBegin }}</td>
+                    <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <p class="main_leg">
+        <a href="{{ url_for('config_add', table=table) }}" class="btn-lg btn-success">新增</a>
+    </p>
 </div>
 
 {% endblock %}
