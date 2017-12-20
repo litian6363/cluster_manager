@@ -6,34 +6,31 @@
 
         <div class="col-sm-2 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="/configtool/Config">主配置<span class="sr-only">(current)</span></a></li>
-                <li><a href="/configtool/DB">数据库</a></li>
+                <li><a href="{{ url_for('config_tool', table='Config') }}">主配置<span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('config_tool', table='DB') }}">数据库</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="/configtool/Kafka">Kafka</a></li>
-                <li><a href="/configtool/KafkaHost">Kafka主机</a></li>
+                <li><a href="{{ url_for('config_tool', table='Kafka') }}">Kafka</a></li>
+                <li><a href="{{ url_for('config_tool', table='KafkaHost') }}">Kafka主机</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="/configtool/Program">程序</a></li>
-                <li><a href="/configtool/SSDB">SSDB</a></li>
-                <li><a href="/configtool/Users">用户</a></li>
+                <li><a href="{{ url_for('config_tool', table='Program') }}">程序</a></li>
+                <li><a href="{{ url_for('config_tool', table='SSDB') }}">SSDB</a></li>
+                <li><a href="{{ url_for('config_tool', table='Users') }}">用户</a></li>
             </ul>
         </div>
 
-        <div class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-sm-offset-2 col-md-11 col-md-offset-2 main">
 
             {% block table_body %}
             {% endblock %}
 
             {% block table_add %}
             {% endblock %}
-
             
         </div>
 
     </div>
 </div>
-
-
 
 {% endblock %}

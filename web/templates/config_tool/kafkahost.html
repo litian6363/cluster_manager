@@ -24,6 +24,10 @@
                     <td>{{ row.Host }}</td>
                     <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
+                    <td>
+                    <a href="{{ url_for('config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
+                    <a href="{{ url_for('config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

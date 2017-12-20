@@ -21,16 +21,20 @@
 
         <tbody>
             {% for row in data_list %}
-                <tr>
-                    <td>{{ row.ID }}</td>
-                    <td>{{ row.DBID }}</td>
-                    <td>{{ row.KafkaHostID }}</td>
-                    <td>{{ row.KafkaID }}</td>
-                    <td>{{ row.ProgramID }}</td>
-                    <td>{{ row.SSDBID }}</td>
-                    <td>{{ row.Sign }}</td>
-                    <td>{{ row.Addon }}</td>
-                </tr>
+            <tr>
+                <td>{{ row.ID }}</td>
+                <td>{{ row.DBID }}</td>
+                <td>{{ row.KafkaHostID }}</td>
+                <td>{{ row.KafkaID }}</td>
+                <td>{{ row.ProgramID }}</td>
+                <td>{{ row.SSDBID }}</td>
+                <td>{{ row.Sign }}</td>
+                <td>{{ row.Addon }}</td>
+                <td>
+                    <a href="{{ url_for('config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
+                    <a href="{{ url_for('config_delete', table=table, item_id=row.ID) }}">删除</a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
 

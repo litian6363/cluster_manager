@@ -9,7 +9,7 @@
   <div class="form-group">
     <label for="ConfigInputID" class="col-sm-2 control-label">ID</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ConfigInputID" name="ConfigInputID" readonly>
+      <input type="number" class="form-control" id="ConfigInputID" name="ConfigInputID" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputDBID" name="ConfigInputDBID">
         {% for row in five_table['DB'] %}
-        <option value={{ row.ID }}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp用户：{{ row.User }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.DBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp用户：{{ row.User }}</option>
         {% endfor %}
       </select>
     </div>
@@ -29,7 +29,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputKafkaHostID" name="ConfigInputKafkaHostID">
         {% for row in five_table['KafkaHost'] %}
-        <option value={{ row.ID }}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.KafkaHostID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -40,7 +40,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputKafkaID" name="ConfigInputKafkaID">
         {% for row in five_table['Kafka'] %}
-        <option value={{ row.ID }}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.KafkaID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -51,7 +51,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputProgramID" name="ConfigInputProgramID">
         {% for row in five_table['Program'] %}
-        <option value={{ row.ID }}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.ProgramID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -62,7 +62,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputSSDBID" name="ConfigInputSSDBID">
         {% for row in five_table['SSDB'] %}
-        <option value={{ row.ID }}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.SSDBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -71,14 +71,14 @@
   <div class="form-group">
     <label for="ConfigInputSign" class="col-sm-2 control-label">Sign</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="ConfigInputSign" name="ConfigInputSign">
+      <input type="text" class="form-control" id="ConfigInputSign" name="ConfigInputSign" {% if item %}value="{{ item.Sign }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="ConfigInputAddon" class="col-sm-2 control-label">Addon</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ConfigInputAddon" name="ConfigInputAddon" readonly>
+      <input type="number" class="form-control" id="ConfigInputAddon" name="ConfigInputAddon" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

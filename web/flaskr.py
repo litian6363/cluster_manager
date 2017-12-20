@@ -9,7 +9,7 @@ __author__ = 'LiTian'
 
 import hashlib
 import functools
-from flask import Flask, request, g, redirect, url_for, abort, render_template, flash, make_response
+from flask import Flask, request, g, redirect, url_for, abort, render_template, flash, make_response, Response
 from datetime import datetime
 from web.cookie_factory import cookie2user, user2cookie
 from web.extension_db import db
@@ -117,7 +117,6 @@ def logout():
 tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost, 'Program': Program, 'SSDB': SSDB, 'Users':Users}
 
 
-@app.route('/configtool/', defaults={'table': 'Config'})
 @app.route('/configtool/<table>')
 @check_user_cookie(request)
 def config_tool(table):
@@ -131,7 +130,7 @@ def config_tool(table):
 @app.route('/configtool/<table>/add', methods=['GET'])
 @check_user_cookie(request)
 def config_add(table):
-    """新增配置GET request 处理"""
+    """新增或修改配置，GET request 处理"""
     if table == 'Kafka':
         return render_template('config_tool_modify/%s.html' % table, table=table, kafkahost_all=KafkaHost.query.all())
     elif table == 'Config':
@@ -145,9 +144,10 @@ def config_add(table):
 @app.route('/configtool/<table>/add', methods=['POST'])
 @check_user_cookie(request)
 def config_add_api(table):
-    """新增或修改配置API POST request 处理"""
+    """接收和处理新增或修改配置工具form表单，POST request """
     if table not in tables:
-        abort(401)
+        abort(404)
+
     elif table == 'Config':
         ConfigInputID = request.form.get('ConfigInputID')
         ConfigInputDBID = request.form.get('ConfigInputDBID')
@@ -167,7 +167,7 @@ def config_add_api(table):
         else:  # 否则就是新增
             new_config = Config(DBID=ConfigInputDBID, KafkaHostID=ConfigInputKafkaHostID,
                                 KafkaID=ConfigInputKafkaID, ProgramID=ConfigInputProgramID,
-                                SSDBID=ConfigInputSSDBID, Sign=ConfigInputSign)
+                                SSDBID=ConfigInputSSDBID, Sign=ConfigInputSign, Addon=datetime.now())
             db.session.add(new_config)
         db.session.commit()
 
@@ -184,7 +184,7 @@ def config_add_api(table):
             old_db.User = DBInputUser
             old_db.Password = DBInputPassword
         else:
-            new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=DBInputPassword)
+            new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=DBInputPassword, Addon=datetime.now())
             db.session.add(new_db)
         db.session.commit()
 
@@ -264,6 +264,37 @@ def config_add_api(table):
             db.session.add(new_ssdb)
         db.session.commit()
     return redirect(url_for('config_tool', table=table))
+
+
+@app.route('/configtool/<table>/delete/<item_id>')
+@check_user_cookie(request)
+def config_delete(table, item_id):
+    """删除行API"""
+    delete_item = tables[table].query.filter_by(ID=item_id).first()
+    if delete_item:
+        try:
+            db.session.delete(delete_item)
+            db.session.commit()
+        except Exception as e:
+            abort(Response(e.args))
+    return redirect(url_for('config_tool', table=table))
+
+
+@app.route('/configtool/<table>/<item_id>')
+@check_user_cookie(request)
+def config_modify(table, item_id):
+    """修改行API"""
+    modify_item = tables[table].query.filter_by(ID=item_id).first()
+    if table == 'Kafka':
+        return render_template('config_tool_modify/%s.html' % table, table=table,
+                               kafkahost_all=KafkaHost.query.all(), item=modify_item)
+    elif table == 'Config':
+        five_table = {'DB': DB.query.all(), 'KafkaHost': KafkaHost.query.all(), 'Kafka': Kafka.query.all(),
+                      'Program': Program.query.all(), 'SSDB': SSDB.query.all()}
+        return render_template('config_tool_modify/%s.html' % table, table=table,
+                               five_table=five_table, item=modify_item)
+    else:
+        return render_template('config_tool_modify/%s.html' % table, table=table, item=modify_item)
 
 
 def recreate_database_and_admin(app, admin_password):

@@ -9,7 +9,7 @@
   <div class="form-group">
     <label for="KafkaInputID" class="col-sm-2 control-label">ID</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="KafkaInputID" name="KafkaInputID" readonly>
+      <input type="number" class="form-control" id="KafkaInputID" name="KafkaInputID" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="KafkaInputHostID" name="KafkaInputHostID">
         {% for row in kafkahost_all %}
-        <option value={{ row.ID }}>{{ row.ID }}:&nbsp{{ row.Host }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.HostID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}:&nbsp{{ row.Host }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -27,28 +27,28 @@
   <div class="form-group">
     <label for="KafkaInputCustomerTopic" class="col-sm-2 control-label">CustomerTopic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic">
+      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic" {% if item %}value="{{ item.CustomerTopic }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputProducerTopic" class="col-sm-2 control-label">ProducerTopic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic">
+      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic" {% if item %}value="{{ item.ProducerTopic }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputAnalyzeTopic" class="col-sm-2 control-label">AnalyzeTopic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic">
+      <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic" {% if item %}value="{{ item.AnalyzeTopic }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputGroupName" class="col-sm-2 control-label">GroupName</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名">
+      <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名" {% if item %}value="{{ item.GroupName }}" {% endif %}>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
         否
       </label>
       <label>
-        <input type="radio" name="KafkaInputAutoCommit" id="option2" value=1>
+        <input type="radio" name="KafkaInputAutoCommit" id="option2" value=1 {% if item %}{% if item.AutoCommit == 1 %} checked {% endif %}{% endif %}>
         是
       </label>
     </div>
@@ -74,7 +74,7 @@
         否
       </label>
       <label>
-        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption2" value=1>
+        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption2" value=1 {% if item %}{% if item.FromBegin == 1 %} checked {% endif %}{% endif %}>
         是
       </label>
     </div>
@@ -83,14 +83,14 @@
   <div class="form-group">
     <label for="KafkaInputDesc" class="col-sm-2 control-label">Desc</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述">
+      <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述" {% if item %}value="{{ item.Desc }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputAddon" class="col-sm-2 control-label">Addon</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" readonly>
+      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 
