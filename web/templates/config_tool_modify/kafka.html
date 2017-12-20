@@ -9,12 +9,12 @@
   <div class="form-group">
     <label for="KafkaInputID" class="col-sm-2 control-label">ID</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="KafkaInputID" name="KafkaInputID" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
+      <input type="number" class="form-control" id="KafkaInputID" name="KafkaInputID" placeholder="自动生成" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputHostID" class="col-sm-2 control-label">HostID</label>
+    <label for="KafkaInputHostID" class="col-sm-2 control-label">KafkaHost的ID</label>
     <div class="col-sm-10">
       <select class="form-control" id="KafkaInputHostID" name="KafkaInputHostID">
         {% for row in kafkahost_all %}
@@ -46,14 +46,14 @@
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputGroupName" class="col-sm-2 control-label">GroupName</label>
+    <label for="KafkaInputGroupName" class="col-sm-2 control-label">组名</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名" {% if item %}value="{{ item.GroupName }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">AutoCommit</label>
+    <label class="col-sm-2 control-label">是否自动提交</label>
     <div class="radio col-sm-10">
       <label>
         <input type="radio" name="KafkaInputAutoCommit" id="option1" value=0 checked>
@@ -67,7 +67,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">FromBegin</label>
+    <label class="col-sm-2 control-label">是否从头开始</label>
     <div class="radio col-sm-10">
       <label>
         <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption1" value=0 checked>
@@ -81,16 +81,16 @@
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputDesc" class="col-sm-2 control-label">Desc</label>
+    <label for="KafkaInputDesc" class="col-sm-2 control-label">描述</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述" {% if item %}value="{{ item.Desc }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputAddon" class="col-sm-2 control-label">Addon</label>
+    <label for="KafkaInputAddon" class="col-sm-2 control-label">创建时间</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

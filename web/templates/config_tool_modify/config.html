@@ -9,12 +9,12 @@
   <div class="form-group">
     <label for="ConfigInputID" class="col-sm-2 control-label">ID</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ConfigInputID" name="ConfigInputID" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
+      <input type="number" class="form-control" id="ConfigInputID" name="ConfigInputID" placeholder="自动生成" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="ConfigInputDBID" class="col-sm-2 control-label">DBID</label>
+    <label for="ConfigInputDBID" class="col-sm-2 control-label">数据库ID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputDBID" name="ConfigInputDBID">
         {% for row in five_table['DB'] %}
@@ -47,7 +47,7 @@
   </div>
 
   <div class="form-group">
-    <label for="ConfigInputProgramID" class="col-sm-2 control-label">ProgramID</label>
+    <label for="ConfigInputProgramID" class="col-sm-2 control-label">程序ID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputProgramID" name="ConfigInputProgramID">
         {% for row in five_table['Program'] %}
@@ -69,16 +69,16 @@
   </div>
 
   <div class="form-group">
-    <label for="ConfigInputSign" class="col-sm-2 control-label">Sign</label>
+    <label for="ConfigInputSign" class="col-sm-2 control-label">标识</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="ConfigInputSign" name="ConfigInputSign" {% if item %}value="{{ item.Sign }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="ConfigInputAddon" class="col-sm-2 control-label">Addon</label>
+    <label for="ConfigInputAddon" class="col-sm-2 control-label">创建时间</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ConfigInputAddon" name="ConfigInputAddon" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="number" class="form-control" id="ConfigInputAddon" name="ConfigInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

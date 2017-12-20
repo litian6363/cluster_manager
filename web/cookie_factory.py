@@ -10,6 +10,8 @@ __author__ = 'LiTian'
 
 import hashlib
 import logging
+import functools
+from flask import render_template
 
 
 def user2cookie(key, user):
@@ -40,3 +42,18 @@ def cookie2user(key, Users, cookie):
     except Exception as e:
         logging.exception(e)
         return None
+
+
+def check_user_cookie(re, app, Users):
+    """装饰器,用cookie来检查用户登录，每次request都检查"""
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*arg, **kw):
+            cookie = re.cookies.get(app.config['COOKIE_NAME'])
+            agree = cookie2user(app.config['COOKIE_NAME'], Users, cookie)
+            if not agree:
+                return render_template('login.html', error='未登陆或登陆已过期，请重新登陆！')
+            return func(*arg, **kw)
+        return wrapper
+    return decorator
+

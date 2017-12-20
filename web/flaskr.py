@@ -8,10 +8,9 @@
 __author__ = 'LiTian'
 
 import hashlib
-import functools
 from flask import Flask, request, g, redirect, url_for, abort, render_template, flash, make_response, Response
 from datetime import datetime
-from web.cookie_factory import cookie2user, user2cookie
+from web.cookie_factory import cookie2user, user2cookie, check_user_cookie
 from web.extension_db import db
 from web.models import Users, Config, DB, Kafka, KafkaHost, Program, SSDB
 
@@ -32,28 +31,14 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
-def check_user_cookie(re):
-    """装饰器,用cookie来检查用户登录，每次request都检查"""
-    def decorator(func):
-        @functools.wraps(func)
-        def wrapper(*arg, **kw):
-            cookie = re.cookies.get(app.config['COOKIE_NAME'])
-            agree = cookie2user(app.config['COOKIE_NAME'], Users, cookie)
-            if not agree:
-                return render_template('login.html', error='未登陆或登陆已过期，请重新登陆！')
-            return func(*arg, **kw)
-        return wrapper
-    return decorator
-
-
 @app.route('/')
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def index():
     return render_template('index.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def signup():
     error = None
     if request.method == 'POST':
@@ -118,7 +103,7 @@ tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost, 'P
 
 
 @app.route('/configtool/<table>')
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def config_tool(table):
     """配置工具view"""
     if table not in tables:
@@ -128,7 +113,7 @@ def config_tool(table):
 
 
 @app.route('/configtool/<table>/add', methods=['GET'])
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def config_add(table):
     """新增或修改配置，GET request 处理"""
     if table == 'Kafka':
@@ -142,7 +127,7 @@ def config_add(table):
 
 
 @app.route('/configtool/<table>/add', methods=['POST'])
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def config_add_api(table):
     """接收和处理新增或修改配置工具form表单，POST request """
     if table not in tables:
@@ -267,7 +252,7 @@ def config_add_api(table):
 
 
 @app.route('/configtool/<table>/delete/<item_id>')
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def config_delete(table, item_id):
     """删除行API"""
     delete_item = tables[table].query.filter_by(ID=item_id).first()
@@ -281,7 +266,7 @@ def config_delete(table, item_id):
 
 
 @app.route('/configtool/<table>/<item_id>')
-@check_user_cookie(request)
+@check_user_cookie(request, app, Users)
 def config_modify(table, item_id):
     """修改行API"""
     modify_item = tables[table].query.filter_by(ID=item_id).first()
