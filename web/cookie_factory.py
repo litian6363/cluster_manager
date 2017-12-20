@@ -11,7 +11,10 @@ __author__ = 'LiTian'
 import hashlib
 import logging
 import functools
-from flask import render_template
+from datetime import datetime
+from flask import render_template, redirect, url_for
+from web import app
+from web.models import db, Users
 
 
 def user2cookie(key, user):
@@ -21,9 +24,10 @@ def user2cookie(key, user):
     return '^'.join(li)
 
 
-def cookie2user(key, Users, cookie):
+def cookie2user(key, cookie):
     """解释cookie，返回user对象"""
-    if not cookie: return None
+    if not cookie:
+        return None
     try:
         li = cookie.split('^')
         if len(li) != 2:
@@ -44,16 +48,28 @@ def cookie2user(key, Users, cookie):
         return None
 
 
-def check_user_cookie(re, app, Users):
+def check_user_cookie(re):
     """装饰器,用cookie来检查用户登录，每次request都检查"""
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*arg, **kw):
+            db.session.remove()
             cookie = re.cookies.get(app.config['COOKIE_NAME'])
-            agree = cookie2user(app.config['COOKIE_NAME'], Users, cookie)
+            agree = cookie2user(app.config['COOKIE_NAME'], cookie)
             if not agree:
-                return render_template('login.html', error='未登陆或登陆已过期，请重新登陆！')
+                return render_template('login.html', error='未登录或登录已过期，请重新登录！')
             return func(*arg, **kw)
         return wrapper
     return decorator
 
+
+def recreate_database_and_admin(app, admin_password='123456'):
+    """重建数据库和管理员"""
+    db.drop_all(app=app)
+    db.create_all(app=app)
+    sha1_password = '%s:%s:%s' % ('admin', admin_password, app.config['SALT'])
+    last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
+    new_use = Users(UserName='admin', Password=last_password, CreateDate=datetime.now())
+    with app.app_context():
+        db.session.add(new_use)
+        db.session.commit()

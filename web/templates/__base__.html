@@ -12,18 +12,19 @@
     <title>聚类管理系统</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../static/css/signin.css" rel="stylesheet">
-    <link href="../../static/css/configtool.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/configtool.css') }}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../static/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../static/js/ie-emulation-modes-warning.js"></script>
+    <!--[if lt IE 9]><script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
+    <script src="{{ url_for('static', filename='js/ie-emulation-modes-warning.js') }}"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -43,18 +44,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">聚类管理系统</a>
+                <a class="navbar-brand" href="{{ url_for('user.index') }}">聚类管理系统</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#">监控界面</a></li>
-                    <li><a href="{{ url_for('config_tool', table='Config') }}">配置工具</a></li>
+                    <li><a href="{{ url_for('configtool.config_tool', table='Config') }}">配置工具</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('signup') }}">注册</a></li>
+                    <li><a href="{{ url_for('user.signup') }}">注册</a></li>
                     {% if request.cookies.get('YunrunClusterManagerSessionName') %}
                     <li><a href="#">{{ request.cookies.get('YunrunClusterManagerSessionName').split('^')[0] }}</a></li>
-                    <li><a href="{{ url_for('logout') }}">注销</a></li>
+                    <li><a href="{{ url_for('user.logout') }}">注销</a></li>
                     {% endif %}
                 </ul>
             </div><!--/.nav-collapse -->
@@ -73,11 +74,11 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../static/js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../static/js/jquery.min.js"><\/script>')</script>
-    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery.min.js') }}"><\/script>')</script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../static/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="{{ url_for('static', filename='js/ie10-viewport-bug-workaround.js') }}"></script>
 
 </body>
 </html>

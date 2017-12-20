@@ -25,15 +25,15 @@
                     <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
                     <td>
-                    <a href="{{ url_for('config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
+                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}">删除</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
     <p class="main_leg">
-        <a href="{{ url_for('config_add', table=table) }}" class="btn-lg btn-success">新增</a>
+        <a href="{{ url_for('configtool.config_add', table=table) }}" class="btn-lg btn-success">新增</a>
     </p>
 </div>
 

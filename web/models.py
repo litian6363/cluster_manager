@@ -6,8 +6,10 @@
 """
 
 
-from web.extension_db import db
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 
 class Users(db.Model):

@@ -1,7 +1,7 @@
 {% extends "config_base.html" %}
 {% block table_add %}
 
-<form action="{{ url_for('config_add_api', table=table) }}" method="post" class="form-horizontal">
+<form action="{{ url_for('configtool.config_add_api', table=table) }}" method="post" class="form-horizontal">
   <div class="form-group">
     <h2>Kafka</h2>
   </div>

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container">
-    <form class="form-signin" action="{{ url_for('signup') }}" method="post">
+    <form class="form-signin" action="{{ url_for('user.signup') }}" method="post">
         <h2 class="form-signin-heading">注册用户</h2>
 
         {% if error %}<label type="error">错误: {{ error }}{% endif %}</label>
