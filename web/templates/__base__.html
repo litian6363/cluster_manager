@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/configtool.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
@@ -44,7 +45,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('user.index') }}">聚类管理系统</a>
+                <a class="navbar-brand" href="/">聚类管理系统</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -70,6 +71,22 @@
         </div>
     </div><!-- /.container -->
 
+
+    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 flash">
+    {% for message in get_flashed_messages(category_filter=['message']) %}
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>信息：</strong>{{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in get_flashed_messages(category_filter=['error']) %}
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>错误：</strong>{{ message }}
+        </div>
+    {% endfor %}
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

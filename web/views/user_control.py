@@ -7,7 +7,6 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, flash, make_response, redirect, url_for
 from web.cookie_factory import user2cookie, check_user_cookie
 from web.models import Users, db
-# from web.extension_db import db
 from web import app
 
 mod = Blueprint('user', __name__)
@@ -40,9 +39,9 @@ def signup():
             new_use = Users(UserName=username, Password=last_password, CreateDate=datetime.now())
             db.session.add(new_use)
             db.session.commit()
-            flash('Signup complete!')
+            flash('注册成功！')
             # 设置 cookie 保存登陆信息
-            response = make_response(redirect(url_for('user.index')))
+            response = make_response(redirect('/'))
             response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], new_use), max_age=21600)
             new_use.Password = '******'
             return response
@@ -67,8 +66,9 @@ def login():
             error = '无效的密码'
             return render_template('login.html', error=error)
         # 设置 cookie 保存登陆信息
-        response = make_response(redirect(url_for('user.index')))
+        response = make_response(redirect('/'))
         response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], user), max_age=21600)
+        flash('登录成功！')
         return response
     return render_template('login.html')
 
