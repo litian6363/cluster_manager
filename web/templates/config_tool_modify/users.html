@@ -1,6 +1,43 @@
 {% extends "config_base.html" %}
 {% block table_add %}
 
-我是users add
+<form action="{{ url_for('configtool.config_add_api', table=table) }}" method="post" class="form-horizontal">
+  <div class="form-group">
+    <h2>用户修改</h2>
+  </div>
+
+  <div class="form-group">
+    <label for="UsersInputID" class="col-sm-2 control-label">ID</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="UsersInputID" name="UsersInputID" placeholder="自动生成" {% if item %}value="{{ item.ID }}" {% endif %} readonly>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="UsersInputUserName" class="col-sm-2 control-label">用户名</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="UsersInputUserName" name="UsersInputUserName" placeholder="用户名" maxlength="50" {% if item %}value="{{ item.UserName }}" {% endif %}>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="UsersInputPassword" class="col-sm-2 control-label">密码</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="UsersInputPassword" name="UsersInputPassword" placeholder="密码" maxlength="50" {% if item %}value="{{ item.Password }}" {% endif %}>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="UsersInputCreateDate" class="col-sm-2 control-label">创建时间</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="UsersInputCreateDate" name="UsersInputCreateDate" placeholder="自动生成" {% if item %}value="{{ item.CreateDate }}" {% endif %} readonly>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-success btn-lg right">提交</button>
+  </div>
+
+</form>
 
 {% endblock %}

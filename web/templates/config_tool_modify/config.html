@@ -71,7 +71,7 @@
   <div class="form-group">
     <label for="ConfigInputSign" class="col-sm-2 control-label">标识</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="ConfigInputSign" name="ConfigInputSign" {% if item %}value="{{ item.Sign }}" {% endif %}>
+      <input type="text" class="form-control" id="ConfigInputSign" name="ConfigInputSign" maxlength="120" {% if item %}value="{{ item.Sign }}" {% endif %}>
     </div>
   </div>
 

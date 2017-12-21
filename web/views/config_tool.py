@@ -7,7 +7,9 @@ from flask import Blueprint, request, render_template, abort, redirect, url_for,
 from web.models import db, Config, DB, Kafka, KafkaHost, Program, SSDB, Users
 from web.cookie_factory import check_user_cookie
 
+
 mod = Blueprint('configtool', __name__, url_prefix='/configtool')
+
 
 tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
           'Program': Program, 'SSDB': SSDB, 'Users': Users}
@@ -18,7 +20,7 @@ tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
 def config_tool(table):
     """配置工具view"""
     if table not in tables:
-        abort(401)
+        abort(404)
     data_list = tables[table].query.all()
     return render_template('config_tool/%s.html' % table, table=table, data_list=data_list)
 
@@ -27,7 +29,9 @@ def config_tool(table):
 @check_user_cookie(request)
 def config_add(table):
     """新增或修改配置，GET request 处理"""
-    if table == 'Kafka':
+    if table not in tables:
+        abort(404)
+    elif table == 'Kafka':
         return render_template('config_tool_modify/%s.html' % table, table=table, kafkahost_all=KafkaHost.query.all())
     elif table == 'Config':
         five_table = {'DB': DB.query.all(), 'KafkaHost': KafkaHost.query.all(), 'Kafka': Kafka.query.all(),
@@ -37,7 +41,7 @@ def config_add(table):
         return render_template('config_tool_modify/%s.html' % table, table=table)
 
 
-@mod.route('/configtool/<table>/add', methods=['POST'])
+@mod.route('/configtool/<table>/modify', methods=['POST'])
 @check_user_cookie(request)
 def config_add_api(table):
     """接收和处理新增或修改配置工具form表单，POST request """
@@ -171,7 +175,7 @@ def config_delete(table, item_id):
             db.session.delete(delete_item)
             db.session.commit()
         except Exception as e:
-            abort(Response(e.args))
+            abort(Response(e))
     return redirect(url_for('configtool.config_tool', table=table))
 
 

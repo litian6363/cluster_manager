@@ -16,7 +16,7 @@ class Users(db.Model):
     __tablename__ = 'users'
 
     ID = db.Column(db.Integer, primary_key=True)
-    UserName = db.Column(db.String(100), unique=True, nullable=False)
+    UserName = db.Column(db.String(50), unique=True, nullable=False)
     Password = db.Column(db.String(50), nullable=False)
     CreateDate = db.Column(db.DATETIME, nullable=False, default=datetime.now())
 

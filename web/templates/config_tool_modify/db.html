@@ -17,28 +17,28 @@
   <div class="form-group">
     <label for="DBInputLANIP" class="col-sm-2 control-label">局域网IP</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="DBInputLANIP" name="DBInputLANIP" placeholder="局域网IP" {% if item %}value="{{ item.LANIP }}" {% endif %}>
+      <input type="text" class="form-control" id="DBInputLANIP" name="DBInputLANIP" placeholder="局域网IP" maxlength="32" {% if item %}value="{{ item.LANIP }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="DBInputIP" class="col-sm-2 control-label">外网IP</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="DBInputIP" name="DBInputIP" placeholder="外网IP" {% if item %}value="{{ item.IP }}" {% endif %}>
+      <input type="text" class="form-control" id="DBInputIP" name="DBInputIP" placeholder="外网IP" maxlength="32" {% if item %}value="{{ item.IP }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="DBInputUser" class="col-sm-2 control-label">用户</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="DBInputUser" name="DBInputUser" placeholder="用户" {% if item %}value="{{ item.User }}" {% endif %}>
+      <input type="text" class="form-control" id="DBInputUser" name="DBInputUser" placeholder="用户" maxlength="16" {% if item %}value="{{ item.User }}" {% endif %}>
     </div>
   </div>
 
   <div class="form-group">
     <label for="DBInputPassword" class="col-sm-2 control-label">密码</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="DBInputPassword" name="DBInputPassword" placeholder="密码" {% if item %}value="{{ item.Password }}" {% endif %}>
+      <input type="password" class="form-control" id="DBInputPassword" name="DBInputPassword" placeholder="密码" maxlength="32" {% if item %}value="{{ item.Password }}" {% endif %}>
     </div>
   </div>
 

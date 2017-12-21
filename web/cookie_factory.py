@@ -53,7 +53,7 @@ def check_user_cookie(re):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*arg, **kw):
-            db.session.remove()
+            db.session.remove()  # 清理flask_sqlalchemy缓存,不清理的话，会导致新加入的数据不能查询出来
             cookie = re.cookies.get(app.config['COOKIE_NAME'])
             agree = cookie2user(app.config['COOKIE_NAME'], cookie)
             if not agree:
