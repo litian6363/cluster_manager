@@ -1,6 +1,9 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+处理用户注册登录等等有关用户信息的操作
+"""
 
 import hashlib
 from datetime import datetime
@@ -10,12 +13,6 @@ from web.models import Users, db
 from web import app
 
 mod = Blueprint('user', __name__)
-
-
-@mod.route('/')
-@check_user_cookie(request)
-def index():
-    return render_template('index.html')
 
 
 @mod.route('/signup', methods=['GET', 'POST'])

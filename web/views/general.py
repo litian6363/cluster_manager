@@ -1,6 +1,10 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+处理主页等一些常规性操作
+"""
+
 from flask import Blueprint, render_template, request
 from cookie_factory import check_user_cookie
 

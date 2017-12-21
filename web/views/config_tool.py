@@ -1,6 +1,10 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+处理配置工具的增删改查等操作
+"""
+
 import hashlib
 from datetime import datetime
 from flask import Blueprint, request, render_template, abort, redirect, url_for, flash

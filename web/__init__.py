@@ -1,6 +1,10 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+flask 主程序
+"""
+
 from flask import Flask
 from models import db
 
@@ -19,7 +23,8 @@ app.config.update(dict(
 # # flask config 文件（没有也不警告）
 # app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-from web.views import config_tool, user_control
+# blueprint 加载进 app
+from web.views import config_tool, user_control, general
 app.register_blueprint(config_tool.mod)
 app.register_blueprint(user_control.mod)
-
+app.register_blueprint(general.mod)

@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-制作和解释cookie
+制作、解释、验证cookie
+重建数据库
 """
 
 __author__ = 'LiTian'
