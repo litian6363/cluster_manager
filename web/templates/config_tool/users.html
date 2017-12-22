@@ -1,5 +1,6 @@
 {% extends "config_base.html" %}
 {% block table_body %}
+{% import '_macros.html' as macros %}
 
 <div class="table table-responsive">
     <table class="table table-striped">
@@ -32,6 +33,9 @@
             {% endfor %}
         </tbody>
     </table>
+    {%if pagination%}
+        {{macros.pagination_widget(pagination,'configtool.config_tool', table=table)}}
+    {%endif%}
     <p class="main_leg">
         <a href="{{ url_for('user.signup') }}" class="btn-lg btn-success">新增</a>
     </p>

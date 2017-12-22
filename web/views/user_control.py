@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-处理用户注册登录等等有关用户信息的操作
+处理用户注册登录等等有关用户信息的url
 """
 
 import hashlib
 from datetime import datetime
 from flask import Blueprint, render_template, request, flash, make_response, redirect, url_for
-from web.cookie_factory import user2cookie, check_user_cookie
+from web.tools import user2cookie, check_user_cookie
 from web.models import Users, db
 from web import app
 

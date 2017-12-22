@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
-处理配置工具的增删改查等操作
+处理配置工具的增删改查等url的api操作
 """
 
 import hashlib
 from datetime import datetime
 from flask import Blueprint, request, render_template, abort, redirect, url_for, flash
 from web.models import db, Config, DB, Kafka, KafkaHost, Program, SSDB, Users
-from web.cookie_factory import check_user_cookie
+from web.tools import check_user_cookie
 from web import app
 
 mod = Blueprint('configtool', __name__, url_prefix='/configtool')
@@ -25,8 +25,10 @@ def config_tool(table):
     """配置工具view"""
     if table not in tables:
         abort(404)
-    data_list = tables[table].query.all()
-    return render_template('config_tool/%s.html' % table, table=table, data_list=data_list)
+    page = request.args.get('page',1,type=int)
+    pagination = tables[table].query.paginate(page, per_page=5, error_out=False)
+    data_list = pagination.items
+    return render_template('config_tool/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
 
 
 @mod.route('/<table>/add', methods=['GET'])
@@ -60,7 +62,7 @@ def config_delete(table, item_id):
     return redirect(url_for('configtool.config_tool', table=table))
 
 
-@mod.route('/<table>/<item_id>', methods=['GET'])
+@mod.route('/<table>/<int:item_id>', methods=['GET'])
 @check_user_cookie(request)
 def config_modify(table, item_id):
     """修改数据，展示form表单"""
@@ -127,7 +129,6 @@ def congig_modify():
                             KafkaID=ConfigInputKafkaID, ProgramID=ConfigInputProgramID,
                             SSDBID=ConfigInputSSDBID, Sign=ConfigInputSign, Addon=datetime.now())
         db.session.add(new_config)
-    db.session.commit()
 
 
 def db_modify():

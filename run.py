@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from web import app
-from web.cookie_factory import recreate_database_and_admin
+from web.tools import recreate_database_and_admin
 
 if __name__ == '__main__':
     # recreate_database_and_admin(app, admin_password='123456')  # 重建数据库和创建管理员

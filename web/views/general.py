@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-处理主页等一些常规性操作
+处理主页等一些常规性url处理
 """
 
 from flask import Blueprint, render_template, request
-from cookie_factory import check_user_cookie
+from tools import check_user_cookie
 
 mod = Blueprint('general', __name__)
 
