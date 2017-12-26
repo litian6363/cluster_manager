@@ -55,6 +55,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ url_for('user.signup') }}">注册</a></li>
                     {% if request.cookies.get('YunrunClusterManagerSessionName') %}
+                        {% if request.cookies.get('YunrunClusterManagerSessionName').split('^')[0] == 'admin' %}
+                        <li><a href="{{ url_for('user.manager') }}">用户管理</a></li>
+                        {% endif %}
                     <li><a href="#">{{ request.cookies.get('YunrunClusterManagerSessionName').split('^')[0] }}</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('user.logout') }}">注销</a></li>

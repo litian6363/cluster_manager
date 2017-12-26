@@ -1,7 +1,7 @@
-{% extends "config_base.html" %}
-{% block table_add %}
+{% extends "__base__.html" %}
+{% block content %}
 
-<form action="{{ url_for('configtool.config_add_api', table=table) }}" method="post" class="form-horizontal">
+<form action="{{ url_for('user.modify_api') }}" method="post" class="form-horizontal">
   <div class="form-group">
     <h2>用户修改</h2>
   </div>

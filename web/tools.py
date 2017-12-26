@@ -43,7 +43,7 @@ def cookie2user(key, cookie):
         if sha1 != hashlib.sha1(st.encode('utf-8')).hexdigest():
             print('invalid cookie sha1')
             return None
-        return True
+        return user
     except Exception as e:
         logging.exception(e)
         return None
@@ -58,7 +58,7 @@ def check_user_cookie(re):
             cookie = re.cookies.get(app.config['COOKIE_NAME'])
             agree = cookie2user(app.config['COOKIE_NAME'], cookie)
             if not agree:
-                return render_template('login.html', error='登录已过期或用户信息已更改，请重新登录！')
+                return render_template('user/login.html', error='登录已过期或用户信息已更改，请重新登录！')
             return func(*arg, **kw)
         return wrapper
     return decorator
@@ -75,3 +75,19 @@ def recreate_database_and_admin(app, admin_password='123456', delect_table=False
     with app.app_context():
         db.session.add(new_use)
         db.session.commit()
+
+
+def check_admin(re):
+    """装饰器,用cookie来检查权限"""
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*arg, **kw):
+            cookie = re.cookies.get(app.config['COOKIE_NAME'])
+            agree = cookie2user(app.config['COOKIE_NAME'], cookie)
+            if not agree:
+                return render_template('user/login.html', error='登录已过期或用户信息已更改，请重新登录！')
+            elif agree.UserName != 'admin':
+                return render_template('user/login.html', error='用户权限不足')
+            return func(*arg, **kw)
+        return wrapper
+    return decorator

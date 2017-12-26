@@ -14,4 +14,4 @@ mod = Blueprint('general', __name__)
 @mod.route('/')
 @check_user_cookie(request)
 def index():
-    return render_template('index.html')
+    return render_template('/index.html')

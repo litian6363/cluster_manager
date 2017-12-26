@@ -1,5 +1,5 @@
-{% extends "config_base.html" %}
-{% block table_body %}
+{% extends "__base__.html" %}
+{% block content %}
 {% import '_macros.html' as macros %}
 
 <div class="table table-responsive">
@@ -26,16 +26,17 @@
                     <td>******</td>
                     <td>{{ row.CreateDate }}</td>
                     <td>
-                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    <a href="{{ url_for('user.modify', user_id=row.ID) }}">编辑</a>&nbsp&nbsp
+                    <a href="{{ url_for('user.delete', user_id=row.ID) }}">删除</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
+
     </table>
     <div class="pagination">
     {%if pagination%}
-        {{macros.pagination_widget(pagination,'configtool.config_tool', table=table)}}
+        {{macros.pagination_widget(pagination,'user.manager')}}
     {%endif%}
     </div>
     <p class="main_leg">

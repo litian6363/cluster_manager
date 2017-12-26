@@ -16,7 +16,7 @@ mod = Blueprint('configtool', __name__, url_prefix='/configtool')
 
 
 tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
-          'Program': Program, 'SSDB': SSDB, 'Users': Users}
+          'Program': Program, 'SSDB': SSDB}
 
 
 @mod.route('/<table>')
@@ -28,7 +28,7 @@ def config_tool(table):
     page = request.args.get('page', 1, type=int)
     pagination = tables[table].query.paginate(page, per_page=10, error_out=False)
     data_list = pagination.items
-    return render_template('config_tool/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
+    return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
 
 
 @mod.route('/<table>/add', methods=['GET'])
@@ -59,7 +59,7 @@ def config_delete(table, item_id):
             flash('删除成功！')
         except Exception as e:
             flash('删除失败，错误信息：%s' % e, category='error')
-    return redirect(url_for('configtool.config_tool', table=table))
+    return redirect(url_for('configtool.config_tool_view', table=table))
 
 
 @mod.route('/<table>/<int:item_id>', methods=['GET'])
@@ -97,14 +97,12 @@ def config_add_api(table):
         program_modify()
     elif table == 'SSDB':
         ssdb_modify()
-    elif table == 'Users':
-        users_modify()
     try:
         db.session.commit()
         flash('数据更新成功！')
     except Exception as e:
         flash('数据更新失败，错误信息：%s' % e, category='error')
-    return redirect(url_for('configtool.config_tool', table=table))
+    return redirect(url_for('configtool.config_tool_view', table=table))
 
 
 def congig_modify():
@@ -227,17 +225,3 @@ def ssdb_modify():
         new_ssdb = SSDB(LANIP=SSDBInputLANIP, Desc=SSDBInputDesc, Addon=datetime.now())
         db.session.add(new_ssdb)
 
-
-def users_modify():
-    """Users表表单处理"""
-    users_input_id = request.form.get('UsersInputID')
-    users_input_username = request.form.get('UsersInputUserName')
-    users_input_password = request.form.get('UsersInputPassword')
-    old_user = Users.query.filter_by(ID=users_input_id).first()
-    if old_user and users_input_username and users_input_password and'^' not in users_input_username:
-        old_user.UserName = users_input_username
-        sha1_password = '%s:%s:%s' % (users_input_username, users_input_password, app.config['SALT'])
-        last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
-        old_user.Password = last_password
-    else:
-        flash('用户名密码不能为空；用户名不能包含<^>字符', category='error')
