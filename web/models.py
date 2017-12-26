@@ -13,6 +13,7 @@ db = SQLAlchemy()
 
 
 class Users(db.Model):
+    __bind_key__ = 'cluster_user'
     __tablename__ = 'users'
 
     ID = db.Column(db.Integer, primary_key=True)

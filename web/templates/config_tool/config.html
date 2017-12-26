@@ -1,5 +1,7 @@
 {% extends "config_base.html" %}
 {% block table_body %}
+{% import '_macros.html' as macros %}
+
 <div class="table table-responsive">
     <table class="table table-striped">
         <p class="main_hard">
@@ -39,6 +41,11 @@
         </tbody>
 
     </table>
+    <div class="pagination">
+    {%if pagination%}
+        {{macros.pagination_widget(pagination,'configtool.config_tool', table=table)}}
+    {%endif%}
+    </div>
     <p class="main_leg">
         <a href="{{ url_for('configtool.config_add', table=table) }}" class="btn-lg btn-success">新增</a>
     </p>

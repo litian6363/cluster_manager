@@ -33,9 +33,11 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
     {%if pagination%}
         {{macros.pagination_widget(pagination,'configtool.config_tool', table=table)}}
     {%endif%}
+    </div>
     <p class="main_leg">
         <a href="{{ url_for('user.signup') }}" class="btn-lg btn-success">新增</a>
     </p>

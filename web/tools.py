@@ -13,7 +13,7 @@ import hashlib
 import logging
 import functools
 from datetime import datetime
-from flask import render_template, redirect, url_for
+from flask import render_template
 from web import app
 from web.models import db, Users
 
@@ -58,15 +58,16 @@ def check_user_cookie(re):
             cookie = re.cookies.get(app.config['COOKIE_NAME'])
             agree = cookie2user(app.config['COOKIE_NAME'], cookie)
             if not agree:
-                return render_template('login.html', error='未登录或登录已过期，请重新登录！')
+                return render_template('login.html', error='登录已过期或用户信息已更改，请重新登录！')
             return func(*arg, **kw)
         return wrapper
     return decorator
 
 
-def recreate_database_and_admin(app, admin_password='123456'):
+def recreate_database_and_admin(app, admin_password='123456', delect_table=False):
     """重建数据库和管理员"""
-    db.drop_all(app=app)
+    if delect_table is True:
+        db.drop_all(app=app)
     db.create_all(app=app)
     sha1_password = '%s:%s:%s' % ('admin', admin_password, app.config['SALT'])
     last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()

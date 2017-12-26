@@ -31,24 +31,6 @@ body {
   }
 }
 
-/*!* Sidebar navigation *!*/
-/*.nav-stacked {*/
-  /*margin-right: -21px; !* 20px padding + 1px border *!*/
-  /*margin-bottom: 20px;*/
-  /*margin-left: -20px;*/
-/*}*/
-/*.nav-stacked > li > a {*/
-  /*padding-right: 20px;*/
-  /*padding-left: 20px;*/
-/*}*/
-/*.nav-stacked > .active > a,*/
-/*.nav-stacked > .active > a:hover,*/
-/*.nav-stacked > .active > a:focus {*/
-  /*color: #fff;*/
-  /*background-color: #428bca;*/
-/*}*/
-
-
 /*
  * Main content
  */
@@ -66,29 +48,10 @@ body {
   margin-top: 0;
 }
 
-
-/*!**/
- /** Placeholder dashboard ideas*/
- /**!*/
-
-/*.placeholders {*/
-  /*margin-bottom: 30px;*/
-  /*text-align: center;*/
-/*}*/
-/*.placeholders h4 {*/
-  /*margin-bottom: 0;*/
-/*}*/
-/*.placeholder {*/
-  /*margin-bottom: 20px;*/
-/*}*/
-/*.placeholder img {*/
-  /*display: inline-block;*/
-  /*border-radius: 50%;*/
-/*}*/
-
 .main_leg a{
   float: right;
 }
+
 .main_hard label{
   font-size: 35px;
   float: left;
@@ -96,4 +59,8 @@ body {
 
 .right{
   float: right;
+}
+
+.pagination{
+  margin: 0px;
 }

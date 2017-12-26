@@ -25,8 +25,8 @@ def config_tool(table):
     """配置工具view"""
     if table not in tables:
         abort(404)
-    page = request.args.get('page',1,type=int)
-    pagination = tables[table].query.paginate(page, per_page=5, error_out=False)
+    page = request.args.get('page', 1, type=int)
+    pagination = tables[table].query.paginate(page, per_page=10, error_out=False)
     data_list = pagination.items
     return render_template('config_tool/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
 
@@ -97,7 +97,7 @@ def config_add_api(table):
         program_modify()
     elif table == 'SSDB':
         ssdb_modify()
-    elif table =='Users':
+    elif table == 'Users':
         users_modify()
     try:
         db.session.commit()
@@ -241,4 +241,3 @@ def users_modify():
         old_user.Password = last_password
     else:
         flash('用户名密码不能为空；用户名不能包含<^>字符', category='error')
-
