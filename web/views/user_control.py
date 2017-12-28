@@ -8,7 +8,7 @@
 import hashlib
 from datetime import datetime
 from flask import Blueprint, render_template, request, flash, make_response, redirect, url_for
-from web.tools import user2cookie, check_user_cookie, check_admin
+from web.tools.cookie_factory import user2cookie, check_user_cookie, check_admin
 from web.models import Users, db
 from web import app
 
@@ -106,11 +106,10 @@ def modify_api():
     users_input_username = request.form.get('UsersInputUserName')
     users_input_password = request.form.get('UsersInputPassword')
     old_user = Users.query.filter_by(ID=users_input_id).first()
-    if old_user and users_input_username and users_input_password and'^' not in users_input_username:
+    if old_user and users_input_username and users_input_password and '^' not in users_input_username:
         if old_user.UserName == 'admin':
-            flash('不要修改admin名字！', category='error')
-        else:
-            old_user.UserName = users_input_username
+            users_input_username = 'admin'
+        old_user.UserName = users_input_username
         sha1_password = '%s:%s:%s' % (users_input_username, users_input_password, app.config['SALT'])
         last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
         old_user.Password = last_password

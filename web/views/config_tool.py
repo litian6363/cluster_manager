@@ -5,11 +5,11 @@
 处理配置工具的增删改查等url的api操作
 """
 
-import hashlib
 from datetime import datetime
 from flask import Blueprint, request, render_template, abort, redirect, url_for, flash
-from web.models import db, Config, DB, Kafka, KafkaHost, Program, SSDB, Users
-from web.tools import check_user_cookie
+from web.models import db, Config, DB, Kafka, KafkaHost, Program, SSDB
+from web.tools.cookie_factory import check_user_cookie
+from web.tools.aes import MyAES
 from web import app
 
 mod = Blueprint('configtool', __name__, url_prefix='/configtool')
@@ -59,7 +59,7 @@ def config_delete(table, item_id):
             flash('删除成功！')
         except Exception as e:
             flash('删除失败，错误信息：%s' % e, category='error')
-    return redirect(url_for('configtool.config_tool_view', table=table))
+    return redirect(url_for('configtool.config_tool', table=table))
 
 
 @mod.route('/<table>/<int:item_id>', methods=['GET'])
@@ -102,7 +102,7 @@ def config_add_api(table):
         flash('数据更新成功！')
     except Exception as e:
         flash('数据更新失败，错误信息：%s' % e, category='error')
-    return redirect(url_for('configtool.config_tool_view', table=table))
+    return redirect(url_for('configtool.config_tool', table=table))
 
 
 def congig_modify():
@@ -136,14 +136,17 @@ def db_modify():
     DBInputIP = request.form.get('DBInputIP')
     DBInputUser = request.form.get('DBInputUser')
     DBInputPassword = request.form.get('DBInputPassword')
+    # AES加密password
+    my_aes = MyAES(app.config['AES_KEY'])
+    aes_DBInputPassword = my_aes.encrypt(DBInputPassword)
     old_db = DB.query.filter_by(ID=DBInputID).first()
     if old_db:
         old_db.LANIP = DBInputLANIP
         old_db.IP = DBInputIP
         old_db.User = DBInputUser
-        old_db.Password = DBInputPassword
+        old_db.Password = aes_DBInputPassword
     else:
-        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=DBInputPassword, Addon=datetime.now())
+        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=aes_DBInputPassword, Addon=datetime.now())
         db.session.add(new_db)
 
 

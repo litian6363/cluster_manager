@@ -19,12 +19,13 @@ app.config.update(dict(
     SQLALCHEMY_DATABASE_URI='mysql://root:root@localhost:3306/cluster_man?charset=utf8',
     COOKIE_NAME='YunrunClusterManagerSessionName',
     SALT='add@2some#t6salts!',
+    AES_KEY='Test AES KEY 123',  # key长度必须是16，24，32
+    SQLALCHEMY_BINDS={  # 多数据库设置
+        'cluster_user': 'mysql://root:root@localhost:3306/cluster_user?charset=utf8'
+    }
 ))
 # flask config 文件（没有也不警告）
 app.config.from_envvar('FLASK_WEB_SETTINGS', silent=True)
-app.config['SQLALCHEMY_BINDS'] = {
-    'cluster_user': 'mysql://root:root@localhost:3306/cluster_user?charset=utf8'
-}
 
 
 # 加载 blueprint 进 app

@@ -59,6 +59,7 @@ body {
 
 .right{
   float: right;
+  margin-left: 10px;
 }
 
 .pagination{

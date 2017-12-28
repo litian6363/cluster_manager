@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from web import app
-from web.tools import recreate_database_and_admin
+from web.tools.cookie_factory import recreate_database_and_admin
 
 
 if __name__ == '__main__':

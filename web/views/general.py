@@ -6,7 +6,7 @@
 """
 
 from flask import Blueprint, render_template, request
-from tools import check_user_cookie
+from tools.cookie_factory import check_user_cookie
 
 mod = Blueprint('general', __name__)
 
