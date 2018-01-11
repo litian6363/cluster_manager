@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-处理配置工具的增删改查等url的api操作
+处理 配置工具 里面的url
 """
 
 from datetime import datetime
@@ -47,7 +47,7 @@ def config_add(table):
         return render_template('config_tool_modify/%s.html' % table, table=table)
 
 
-@mod.route('/<table>/delete/<item_id>')
+@mod.route('/<table>/delete/<int:item_id>')
 @check_user_cookie(request)
 def config_delete(table, item_id):
     """删除数据"""
@@ -137,8 +137,8 @@ def db_modify():
     DBInputUser = request.form.get('DBInputUser')
     DBInputPassword = request.form.get('DBInputPassword')
     # AES加密password
-    my_aes = MyAES(app.config['AES_KEY'])
-    aes_DBInputPassword = my_aes.encrypt(DBInputPassword)
+    my_aes = MyAES(app.config['AES_KEY'], app.config['AES_IV'])
+    aes_DBInputPassword = my_aes.my_encrypt(DBInputPassword)
     old_db = DB.query.filter_by(ID=DBInputID).first()
     if old_db:
         old_db.LANIP = DBInputLANIP
@@ -227,4 +227,3 @@ def ssdb_modify():
     else:
         new_ssdb = SSDB(LANIP=SSDBInputLANIP, Desc=SSDBInputDesc, Addon=datetime.now())
         db.session.add(new_ssdb)
-

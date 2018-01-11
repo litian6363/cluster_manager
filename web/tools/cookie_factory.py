@@ -3,6 +3,7 @@
 
 """
 制作、解释、验证cookie
+验证是否admin用户
 重建数据库
 """
 
@@ -65,7 +66,7 @@ def check_user_cookie(re):
 
 
 def check_admin(re):
-    """装饰器,用cookie来检查权限"""
+    """装饰器,跟check_user_cookie大致相同，但增加用cookie来检查权限"""
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*arg, **kw):

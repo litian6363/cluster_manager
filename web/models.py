@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-存放sqlalchemy模板的地方
+存放sqlalchemy模型的地方
 """
 
 
@@ -10,6 +10,14 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+
+def to_dict(self):
+    """将查询结果转换成dict"""
+    return {c.name: getattr(self, c.name, None) for c in self.__table__.columns}
+
+
+db.Model.to_dict = to_dict  # 将to_dict()绑定到父类，让下面的模型都可以用到。
 
 
 class Users(db.Model):

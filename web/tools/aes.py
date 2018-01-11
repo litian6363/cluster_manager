@@ -29,13 +29,13 @@ class MyAES:
         length = 16
         count = len(text)
         add = length - (count % length)
-        text = text + (b'\000' * add)
+        text = text + (b' ' * add)
         cipher_text = my_aes.encrypt(text)
-        # 统一把加密后的bytes转化为16进制字符串
-        return bytes.decode(base64.b64encode(cipher_text))
+        # 统一把加密后的text转化为base64
+        return base64.b64encode(cipher_text)
 
     def my_decrypt(self, text):
-        """解密后，用rstrip()去掉补足的字符"""
+        """把base64解密后，用rstrip()去掉补足的字符"""
         my_aes = AES.new(self.key, self.mode, self.iv)
         plain_text = my_aes.decrypt(base64.b64decode(text))
-        return bytes.decode(plain_text).rstrip()
+        return plain_text.rstrip()

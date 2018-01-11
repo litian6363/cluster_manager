@@ -8,7 +8,7 @@
 import hashlib
 from datetime import datetime
 from flask import Blueprint, render_template, request, flash, make_response, redirect, url_for
-from web.tools.cookie_factory import user2cookie, check_user_cookie, check_admin
+from web.tools.cookie_factory import user2cookie, check_admin
 from web.models import Users, db
 from web import app
 
@@ -35,14 +35,18 @@ def signup():
             sha1_password = '%s:%s:%s' % (username, password, app.config['SALT'])
             last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
             new_use = Users(UserName=username, Password=last_password, CreateDate=datetime.now())
-            db.session.add(new_use)
-            db.session.commit()
-            flash('注册成功！')
-            # 设置 cookie 保存登陆信息
-            response = make_response(redirect('/'))
-            response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], new_use), max_age=21600)
-            new_use.Password = '******'
-            return response
+            try:
+                db.session.add(new_use)
+                db.session.commit()
+                flash('注册成功！')
+                # 生成 cookie 保存登陆信息
+                response = make_response(redirect('/'))
+                response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], new_use),
+                                    max_age=21600)
+                new_use.Password = '******'
+                return response
+            except Exception as e:
+                flash('注册失败,错误信息：%s' % e)
     return render_template('user/signup.html', error=error)
 
 
