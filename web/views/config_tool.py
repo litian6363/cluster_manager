@@ -5,6 +5,8 @@
 处理 配置工具 里面的url
 """
 
+__author__ = 'LiTian'
+
 from datetime import datetime
 from flask import Blueprint, request, render_template, abort, redirect, url_for, flash
 from web.models import db, Config, DB, Kafka, KafkaHost, Program, SSDB
@@ -22,13 +24,32 @@ tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
 @mod.route('/<table>')
 @check_user_cookie(request)
 def config_tool(table):
-    """配置工具view"""
+    """查看配置"""
     if table not in tables:
         abort(404)
+
     page = request.args.get('page', 1, type=int)
     pagination = tables[table].query.paginate(page, per_page=10, error_out=False)
-    data_list = pagination.items
-    return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
+    if table == 'Config':
+        data_list = list(map(lambda r: r.to_dict(), pagination.items))  # 将sqlalchemy查询结果转换成dict
+        for row in data_list:  # 将ID转换成对应的描述
+            row['DBID'] = str(row['DBID']) + ':' + DB.query.filter_by(ID=row['DBID']).first().IP
+            row['KafkaHostID'] = str(row['KafkaHostID']) + ':' + KafkaHost.query.filter_by(ID=row['KafkaHostID']).first().Desc
+            row['KafkaID'] = str(row['KafkaID']) + ':' + Kafka.query.filter_by(ID=row['KafkaID']).first().Desc
+            row['ProgramID'] = str(row['ProgramID']) + ':' + Program.query.filter_by(ID=row['ProgramID']).first().Desc
+            row['SSDBID'] = str(row['SSDBID']) + ':' + SSDB.query.filter_by(ID=row['SSDBID']).first().Desc
+        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
+
+    elif table == 'Kafka':
+        data_list = list(map(lambda r: r.to_dict(), pagination.items))  # 将sqlalchemy查询结果转换成dict
+        for row in data_list:  # 将ID转换成对应的描述
+            row['HostID'] = str(row['HostID']) + ':' + KafkaHost.query.filter_by(ID=row['HostID']).first().Desc
+        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list,
+                               pagination=pagination)
+
+    else:
+        data_list = pagination.items
+        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
 
 
 @mod.route('/<table>/add', methods=['GET'])
@@ -37,6 +58,7 @@ def config_add(table):
     """新增数据，展示form表单，GET request"""
     if table not in tables:
         abort(404)
+
     elif table == 'Kafka':
         return render_template('config_tool_modify/%s.html' % table, table=table, kafkahost_all=KafkaHost.query.all())
     elif table == 'Config':
@@ -73,8 +95,7 @@ def config_modify(table, item_id):
     elif table == 'Config':
         five_table = {'DB': DB.query.all(), 'KafkaHost': KafkaHost.query.all(), 'Kafka': Kafka.query.all(),
                       'Program': Program.query.all(), 'SSDB': SSDB.query.all()}
-        return render_template('config_tool_modify/%s.html' % table, table=table,
-                               five_table=five_table, item=modify_item)
+        return render_template('config_tool_modify/%s.html' % table, table=table,five_table=five_table, item=modify_item)
     else:
         return render_template('config_tool_modify/%s.html' % table, table=table, item=modify_item)
 

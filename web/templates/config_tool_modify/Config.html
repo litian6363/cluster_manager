@@ -18,7 +18,7 @@
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputDBID" name="ConfigInputDBID">
         {% for row in five_table['DB'] %}
-        <option value={{ row.ID }} {% if item %}{% if item.DBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp用户：{{ row.User }}</option>
+        <option value={{ row.ID }} {% if item %}{% if item.DBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbspIP：{{ row.IP }}</option>
         {% endfor %}
       </select>
     </div>

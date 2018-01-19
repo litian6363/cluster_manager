@@ -5,6 +5,8 @@
 存放sqlalchemy模型的地方
 """
 
+__author__ = 'LiTian'
+
 
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy

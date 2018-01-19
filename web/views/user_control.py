@@ -5,6 +5,8 @@
 处理用户注册登录等等有关用户信息的url
 """
 
+__author__ = 'LiTian'
+
 import hashlib
 from datetime import datetime
 from flask import Blueprint, render_template, request, flash, make_response, redirect, url_for
@@ -41,9 +43,10 @@ def signup():
                 flash('注册成功！')
                 # 生成 cookie 保存登陆信息
                 response = make_response(redirect('/'))
-                response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], new_use),
-                                    max_age=21600)
-                new_use.Password = '******'
+                response.set_cookie(app.config['COOKIE_NAME'],
+                                    user2cookie(app.config['COOKIE_NAME'], new_use, request.remote_addr),
+                                    max_age=21600,
+                                    httponly=True)
                 return response
             except Exception as e:
                 flash('注册失败,错误信息：%s' % e)
@@ -70,7 +73,10 @@ def login():
             return render_template('user/login.html', error=error)
         # 设置 cookie 保存登陆信息
         response = make_response(redirect('/'))
-        response.set_cookie(app.config['COOKIE_NAME'], user2cookie(app.config['COOKIE_NAME'], user), max_age=21600)
+        response.set_cookie(app.config['COOKIE_NAME'],
+                            user2cookie(app.config['COOKIE_NAME'], user, request.remote_addr),
+                            max_age=21600,
+                            httponly=True)
         flash('登录成功！')
         return response
     return render_template('user/login.html')
@@ -143,3 +149,4 @@ def delete(user_id):
             except Exception as e:
                 flash('删除失败，错误信息：%s' % e, category='error')
     return redirect(url_for('user.manager'))
+

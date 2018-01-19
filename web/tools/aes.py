@@ -10,6 +10,10 @@ pip install pycryptodome
 pyCryptodome支持 python2.4 之后的版本和所有 python3 的版本
 """
 
+
+__author__ = 'LiTian'
+
+
 from Crypto.Cipher import AES
 import base64
 

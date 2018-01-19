@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>HostID</th>
+                <th>KafkaHost</th>
                 <th>CustomerTopic</th>
                 <th>ProducerTopic</th>
                 <th>AnalyzeTopic</th>
@@ -27,19 +27,19 @@
         <tbody>
             {% for row in data_list %}
                 <tr>
-                    <td>{{ row.ID }}</td>
-                    <td>{{ row.HostID }}</td>
-                    <td>{{ row.CustomerTopic }}</td>
-                    <td>{{ row.ProducerTopic }}</td>
-                    <td>{{ row.AnalyzeTopic }}</td>
-                    <td>{{ row.GroupName }}</td>
-                    <td>{{ row.AutoCommit }}</td>
-                    <td>{{ row.FromBegin }}</td>
-                    <td>{{ row.Desc }}</td>
-                    <td>{{ row.Addon }}</td>
+                    <td>{{ row['ID'] }}</td>
+                    <td>{{ row['HostID'] }}</td>
+                    <td>{{ row['CustomerTopic'] }}</td>
+                    <td>{{ row['ProducerTopic'] }}</td>
+                    <td>{{ row['AnalyzeTopic'] }}</td>
+                    <td>{{ row['GroupName'] }}</td>
+                    <td>{{ row['AutoCommit'] }}</td>
+                    <td>{{ row['FromBegin'] }}</td>
+                    <td>{{ row['Desc'] }}</td>
+                    <td>{{ row['Addon'] }}</td>
                     <td>
-                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row['ID']) }}">编辑</a>&nbsp&nbsp
+                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row['ID']) }}">删除</a>
                     </td>
                 </tr>
             {% endfor %}

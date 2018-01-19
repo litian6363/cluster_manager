@@ -262,3 +262,6 @@ __pycache__/
 .vs/
 .vscode/
 env/
+
+my python habit
+test*.py
