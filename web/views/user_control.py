@@ -17,42 +17,6 @@ from web import app
 mod = Blueprint('user', __name__, url_prefix='/user')
 
 
-@mod.route('/signup', methods=['GET', 'POST'])
-@check_admin(request)
-def signup():
-    """用户注册"""
-    error = None
-    if request.method == 'POST':
-        username = request.form['username'].strip()
-        password = request.form['password'].strip()
-        em = Users.query.filter_by(UserName=username).first()
-        if not username or len(username) > 50 or '^' in username:
-            error = '无效的用户名'
-        elif not password or len(password) > 50:
-            error = '无效的密码'
-        elif em:
-            error = '用户已存在'
-        else:
-            # 加密password
-            sha1_password = '%s:%s:%s' % (username, password, app.config['SALT'])
-            last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
-            new_use = Users(UserName=username, Password=last_password, CreateDate=datetime.now())
-            try:
-                db.session.add(new_use)
-                db.session.commit()
-                flash('注册成功！')
-                # 生成 cookie 保存登陆信息
-                response = make_response(redirect('/'))
-                response.set_cookie(app.config['COOKIE_NAME'],
-                                    user2cookie(app.config['COOKIE_NAME'], new_use, request.remote_addr),
-                                    max_age=21600,
-                                    httponly=True)
-                return response
-            except Exception as e:
-                flash('注册失败,错误信息：%s' % e)
-    return render_template('user/signup.html', error=error)
-
-
 @mod.route('/login', methods=['GET', 'POST'])
 def login():
     """用户登录"""
@@ -66,8 +30,8 @@ def login():
         if not user:
             error = '用户不存在'
             return render_template('user/login.html', error=error)
-        username_password_key = '%s:%s:%s' % (username, password, app.config['SALT'])
-        sha1_password = hashlib.sha1(username_password_key.encode('utf-8')).hexdigest()
+        username_password_salt = '%s:%s:%s' % (username, password, app.config['SALT'])
+        sha1_password = hashlib.sha1(username_password_salt.encode('utf-8')).hexdigest()
         if sha1_password != user.Password:
             error = '无效的密码'
             return render_template('user/login.html', error=error)
@@ -100,6 +64,13 @@ def manager():
     return render_template('user/users_manager.html', table=Users, data_list=data_list, pagination=pagination)
 
 
+@mod.route('/signup', methods=['GET'])
+@check_admin(request)
+def signup():
+    """用户注册,展示form表单"""
+    return render_template('user/users_modify.html')
+
+
 @mod.route('/modify/<int:user_id>', methods=['GET'])
 @check_admin(request)
 def modify(user_id):
@@ -111,25 +82,49 @@ def modify(user_id):
 @mod.route('/modify/', methods=['POST'])
 @check_admin(request)
 def modify_api():
-    """修改用户数据API"""
-    users_input_id = request.form.get('UsersInputID')
-    users_input_username = request.form.get('UsersInputUserName')
-    users_input_password = request.form.get('UsersInputPassword')
+    """修改或新增用户"""
+    users_input_id = request.form.get('UsersInputID').strip()
+    users_input_username = request.form.get('UsersInputUserName').strip()
+    users_input_password = request.form.get('UsersInputPassword').strip()
+    users_input_password_again = request.form.get('UsersInputAgainPassword').strip()
+
     old_user = Users.query.filter_by(ID=users_input_id).first()
-    if old_user and users_input_username and users_input_password and '^' not in users_input_username:
-        if old_user.UserName == 'admin':
-            users_input_username = 'admin'
+    item = Users(UserName=users_input_username, Password=users_input_password)
+
+    # 验证输入信息
+    if not users_input_username or len(users_input_username) > 50 or '^' in users_input_username or ':' in users_input_username:
+        flash('无效的用户名', category='error')
+        return render_template('user/users_modify.html', item=item)
+    elif not users_input_password or len(users_input_password) > 50 or '^' in users_input_password or ':' in users_input_password:
+        flash('无效的密码', category='error')
+        return render_template('user/users_modify.html', item=item)
+    elif users_input_password != users_input_password_again:
+        flash('两次密码不相同', category='error')
+        return render_template('user/users_modify.html', item=item)
+    elif old_user and old_user.UserName == 'admin' and users_input_username != 'admin':  # 拒绝修改admin用户名
+        flash('不能修改admin用户名', category='error')
+        return render_template('user/users_modify.html', item=item)
+
+    # 加密password
+    username_password_salt = '%s:%s:%s' % (users_input_username, users_input_password, app.config['SALT'])
+    sha1_password = hashlib.sha1(username_password_salt.encode('utf-8')).hexdigest()
+
+    # 如果存在用户即修改
+    if old_user:
         old_user.UserName = users_input_username
-        sha1_password = '%s:%s:%s' % (users_input_username, users_input_password, app.config['SALT'])
-        last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
-        old_user.Password = last_password
+        old_user.Password = sha1_password
+
+    # 不存在用户即新增
     else:
-        flash('用户名密码不能为空；用户名不能包含<^>字符', category='error')
+        new_use = Users(UserName=users_input_username, Password=sha1_password, CreateDate=datetime.now())
+        db.session.add(new_use)
+
     try:
         db.session.commit()
         flash('用户更新成功！')
     except Exception as e:
-        flash('用户修改失败，错误信息：%s' % e, category='error')
+        flash('用户更新失败，错误信息：%s' % e, category='error')
+        return render_template('user/users_modify.html', item=item)
     return redirect(url_for('user.manager'))
 
 

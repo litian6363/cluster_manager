@@ -24,7 +24,7 @@ tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
 @mod.route('/<table>')
 @check_user_cookie(request)
 def config_tool(table):
-    """查看配置"""
+    """查看配置数据"""
     if table not in tables:
         abort(404)
 
