@@ -6,16 +6,13 @@
     <table class="table table-striped">
 
         <p class="main_hard">
-            <label>数据库配置</label>
+            <label>{{ table }}配置</label>
         </p>
 
         <thead>
             <tr>
                 <th>ID</th>
-                <th>LANIP</th>
-                <th>IP</th>
-                <th>User</th>
-                <th>Password</th>
+                <th>Code</th>
                 <th>Desc</th>
                 <th>Addon</th>
             </tr>
@@ -25,10 +22,7 @@
             {% for row in data_list %}
                 <tr>
                     <td>{{ row.ID }}</td>
-                    <td>{{ row.LANIP }}</td>
-                    <td>{{ row.IP }}</td>
-                    <td>{{ row.User }}</td>
-                    <td>******</td>
+                    <td>{{ row.Code }}</td>
                     <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
                     <td>

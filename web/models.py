@@ -44,6 +44,7 @@ class Config(db.Model):
     KafkaID = db.Column(db.Integer, db.ForeignKey('kafka.ID'), nullable=False)
     ProgramID = db.Column(db.Integer, db.ForeignKey('program.ID'), nullable=False)
     SSDBID = db.Column(db.Integer, db.ForeignKey('ssdb.ID'), nullable=False)
+    TypeID = db.Column(db.Integer, db.ForeignKey('type.ID'), nullable=False)
     Sign = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -59,6 +60,7 @@ class DB(db.Model):
     IP = db.Column(db.String(32), nullable=False)
     User = db.Column(db.String(16), nullable=False)
     Password = db.Column(db.String(32), nullable=False)
+    Desc = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
     def __repr__(self):
@@ -120,4 +122,16 @@ class SSDB(db.Model):
 
     def __repr__(self):
         return '<SSDB %r>' % self.Desc
+
+
+class Type(db.Model):
+    __tablename__ = 'type'
+
+    ID = db.Column(db.Integer, primary_key=True)
+    Code = db.Column(db.Integer, nullable=False)
+    Desc = db.Column(db.String(128), nullable=False)
+    Addon = db.Column(db.TIMESTAMP, nullable=False)
+
+    def __repr__(self):
+        return '<Type %r>' % self.Desc
 

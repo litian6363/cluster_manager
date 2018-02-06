@@ -16,6 +16,7 @@
                 <th>Kafka</th>
                 <th>Program</th>
                 <th>SSDB</th>
+                <th>Type</th>
                 <th>Sign</th>
                 <th>Addon</th>
             </tr>
@@ -25,11 +26,12 @@
             {% for row in data_list %}
             <tr>
                 <td>{{ row['ID'] }}</td>
-                <td>{{ row['DBID'] }}</td>
-                <td>{{ row['KafkaHostID'] }}</td>
-                <td>{{ row['KafkaID'] }}</td>
-                <td>{{ row['ProgramID'] }}</td>
-                <td>{{ row['SSDBID'] }}</td>
+                <td>{{ row['DB'] }}</td>
+                <td>{{ row['KafkaHost'] }}</td>
+                <td>{{ row['Kafka'] }}</td>
+                <td>{{ row['Program'] }}</td>
+                <td>{{ row['SSDB'] }}</td>
+                <td>{{ row['Type'] }}</td>
                 <td>{{ row['Sign'] }}</td>
                 <td>{{ row['Addon'] }}</td>
                 <td>

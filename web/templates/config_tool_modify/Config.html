@@ -17,8 +17,8 @@
     <label for="ConfigInputDBID" class="col-sm-2 control-label">数据库ID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputDBID" name="ConfigInputDBID">
-        {% for row in five_table['DB'] %}
-        <option value={{ row.ID }} {% if item %}{% if item.DBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbspIP：{{ row.IP }}</option>
+        {% for row in tables_query['DB'] %}
+        <option value={{ row.ID }} {% if item %}{% if item.DBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbspIP：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
@@ -28,7 +28,7 @@
     <label for="ConfigInputKafkaHostID" class="col-sm-2 control-label">KafkaHostID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputKafkaHostID" name="ConfigInputKafkaHostID">
-        {% for row in five_table['KafkaHost'] %}
+        {% for row in tables_query['KafkaHost'] %}
         <option value={{ row.ID }} {% if item %}{% if item.KafkaHostID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
@@ -39,7 +39,7 @@
     <label for="ConfigInputKafkaID" class="col-sm-2 control-label">KafkaID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputKafkaID" name="ConfigInputKafkaID">
-        {% for row in five_table['Kafka'] %}
+        {% for row in tables_query['Kafka'] %}
         <option value={{ row.ID }} {% if item %}{% if item.KafkaID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
@@ -50,7 +50,7 @@
     <label for="ConfigInputProgramID" class="col-sm-2 control-label">程序ID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputProgramID" name="ConfigInputProgramID">
-        {% for row in five_table['Program'] %}
+        {% for row in tables_query['Program'] %}
         <option value={{ row.ID }} {% if item %}{% if item.ProgramID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
@@ -61,8 +61,19 @@
     <label for="ConfigInputSSDBID" class="col-sm-2 control-label">SSDBID</label>
     <div class="col-sm-10">
       <select class="form-control" id="ConfigInputSSDBID" name="ConfigInputSSDBID">
-        {% for row in five_table['SSDB'] %}
+        {% for row in tables_query['SSDB'] %}
         <option value={{ row.ID }} {% if item %}{% if item.SSDBID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ConfigInputTypeID" class="col-sm-2 control-label">TypeID</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="ConfigInputTypeID" name="ConfigInputTypeID">
+        {% for row in tables_query['Type'] %}
+        <option value={{ row.ID }} {% if item %}{% if item.TypeID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
       </select>
     </div>
