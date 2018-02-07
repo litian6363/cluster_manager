@@ -17,7 +17,7 @@
   <div class="form-group">
     <label for="TypeInputCode" class="col-sm-2 control-label">聚类类型</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="TypeInputCode" name="TypeInputCode" placeholder="聚类类型" maxlength="32" {% if item %}value="{{ item.Code }}" {% endif %}>
+      <input type="number" class="form-control" id="TypeInputCode" name="TypeInputCode" placeholder="聚类类型" maxlength="6" {% if item %}value="{{ item.Code }}" {% endif %}>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
   <div class="form-group">
     <label for="TypeInputAddon" class="col-sm-2 control-label">创建时间</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="TypeInputAddon" name="TypeInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="text" class="form-control" id="TypeInputAddon" name="TypeInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

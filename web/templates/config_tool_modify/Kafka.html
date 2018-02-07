@@ -16,7 +16,7 @@
   <div class="form-group">
     <label for="KafkaInputHostID" class="col-sm-2 control-label">KafkaHost的ID</label>
     <div class="col-sm-10">
-      <select class="form-control" id="KafkaInputHostID" name="KafkaInputHostID">
+      <select class="form-control" id="KafkaInputHostID" name="KafkaInputHostID" required>
         {% for row in kafkahost_all %}
         <option value={{ row.ID }} {% if item %}{% if item.HostID == row.ID %} selected="selected" {% endif %}{% endif %}>{{ row.ID }}:&nbsp{{ row.Host }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp描述：{{ row.Desc }}</option>
         {% endfor %}
@@ -25,21 +25,21 @@
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputCustomerTopic" class="col-sm-2 control-label">CustomerTopic</label>
+    <label for="KafkaInputCustomerTopic" class="col-sm-2 control-label">获取数据的Topic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic" maxlength="32" {% if item %}value="{{ item.CustomerTopic }}" {% endif %}>
+      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic" maxlength="32" {% if item %}value="{{ item.CustomerTopic }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputProducerTopic" class="col-sm-2 control-label">ProducerTopic</label>
+    <label for="KafkaInputProducerTopic" class="col-sm-2 control-label">发送数据的Topic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic" maxlength="32" {% if item %}value="{{ item.ProducerTopic }}" {% endif %}>
+      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic" maxlength="32" {% if item %}value="{{ item.ProducerTopic }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="KafkaInputAnalyzeTopic" class="col-sm-2 control-label">AnalyzeTopic</label>
+    <label for="KafkaInputAnalyzeTopic" class="col-sm-2 control-label">发送统计数据的Topic</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic" maxlength="32" {% if item %}value="{{ item.AnalyzeTopic }}" {% endif %}>
     </div>
@@ -48,7 +48,7 @@
   <div class="form-group">
     <label for="KafkaInputGroupName" class="col-sm-2 control-label">组名</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名" maxlength="32" {% if item %}value="{{ item.GroupName }}" {% endif %}>
+      <input type="text" class="form-control" id="KafkaInputGroupName" name="KafkaInputGroupName" placeholder="组名" maxlength="32" {% if item %}value="{{ item.GroupName }}" {% endif %} required>
     </div>
   </div>
 
@@ -83,14 +83,14 @@
   <div class="form-group">
     <label for="KafkaInputDesc" class="col-sm-2 control-label">描述</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述" maxlength="120" {% if item %}value="{{ item.Desc }}" {% endif %}>
+      <input type="text" class="form-control" id="KafkaInputDesc" name="KafkaInputDesc" placeholder="简单描述" maxlength="120" {% if item %}value="{{ item.Desc }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputAddon" class="col-sm-2 control-label">创建时间</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="text" class="form-control" id="KafkaInputAddon" name="KafkaInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

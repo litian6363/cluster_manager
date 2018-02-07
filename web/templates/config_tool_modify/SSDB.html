@@ -17,21 +17,28 @@
   <div class="form-group">
     <label for="SSDBInputLANIP" class="col-sm-2 control-label">内网IP</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="SSDBInputLANIP" name="SSDBInputLANIP" placeholder="内网IP" maxlength="32" {% if item %}value="{{ item.LANIP }}" {% endif %}>
+      <input type="text" class="form-control" id="SSDBInputLANIP" name="SSDBInputLANIP" placeholder="内网IP" maxlength="32" {% if item %}value="{{ item.LANIP }}" {% endif %} required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="SSDBInputPort" class="col-sm-2 control-label">端口</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="SSDBInputPort" name="SSDBInputPort" placeholder="端口" maxlength="11" {% if item %}value="{{ item.Port }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="SSDBInputDesc" class="col-sm-2 control-label">描述</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="SSDBInputDesc" name="SSDBInputDesc" placeholder="描述" maxlength="120" {% if item %}value="{{ item.Desc }}" {% endif %}>
+      <input type="text" class="form-control" id="SSDBInputDesc" name="SSDBInputDesc" placeholder="描述" maxlength="120" {% if item %}value="{{ item.Desc }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="SSDBInputAddon" class="col-sm-2 control-label">创建时间</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="SSDBInputAddon" name="SSDBInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="text" class="form-control" id="SSDBInputAddon" name="SSDBInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

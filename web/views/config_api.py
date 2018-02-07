@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-返回Config表中的数据
+返回Config表中的数据的API
 """
 
 __author__ = 'LiTian'

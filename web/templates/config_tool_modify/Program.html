@@ -14,23 +14,30 @@
   </div>
 
   <div class="form-group">
+    <label for="ProgramInputDay" class="col-sm-2 control-label">聚类时间范围</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="ProgramInputDay" name="ProgramInputDay" placeholder="聚类时间范围" maxlength="6" {% if item %}value="{{ item.MaxKwsCount }}" {% endif %} required>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="ProgramInputMaxKwsCount" class="col-sm-2 control-label">最大关键词个数</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ProgramInputMaxKwsCount" name="ProgramInputMaxKwsCount" placeholder="最大关键词个数" maxlength="11" {% if item %}value="{{ item.MaxKwsCount }}" {% endif %}>
+      <input type="number" class="form-control" id="ProgramInputMaxKwsCount" name="ProgramInputMaxKwsCount" placeholder="最大关键词个数" maxlength="11" {% if item %}value="{{ item.MaxKwsCount }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="ProgramInputMaxEntityCount" class="col-sm-2 control-label">最大实体词个数</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ProgramInputMaxEntityCount" name="ProgramInputMaxEntityCount" placeholder="最大实体词个数" maxlength="11" {% if item %}value="{{ item.MaxEntityCount }}" {% endif %}>
+      <input type="number" class="form-control" id="ProgramInputMaxEntityCount" name="ProgramInputMaxEntityCount" placeholder="最大实体词个数" maxlength="11" {% if item %}value="{{ item.MaxEntityCount }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="ProgramInputExpired" class="col-sm-2 control-label">Guava缓存失效时间：小时</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ProgramInputExpired" name="ProgramInputExpired" placeholder="缓存在Guava的数据失效时间；单位：小时" maxlength="11" {% if item %}value="{{ item.Expired }}" {% endif %}>
+      <input type="number" class="form-control" id="ProgramInputExpired" name="ProgramInputExpired" placeholder="缓存在Guava的数据失效时间；单位：小时" maxlength="11" {% if item %}value="{{ item.Expired }}" {% endif %} required>
     </div>
   </div>
 
@@ -42,16 +49,37 @@
   </div>
 
   <div class="form-group">
+    <label for="ProgramInputSkipSiteTypes" class="col-sm-2 control-label">不经过聚类的SiteType</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="ProgramInputSkipSiteTypes" name="ProgramInputSkipSiteTypes" placeholder="不经过聚类的SiteType" maxlength="128" {% if item %}value="{{ item.SkipSiteTypes }}" {% endif %} required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">数据是否需要统计</label>
+    <div class="radio col-sm-10">
+      <label>
+        <input type="radio" name="ProgramInputIsNeedStatistic" id="option1" value=0 checked>
+        否
+      </label>
+      <label>
+        <input type="radio" name="ProgramInputIsNeedStatistic" id="option2" value=1 {% if item %}{% if item.IsNeedStatistic == 1 %} checked {% endif %}{% endif %}>
+        是
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="ProgramInputDesc" class="col-sm-2 control-label">描述</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="ProgramInputDesc" name="ProgramInputDesc" placeholder="简单描述" maxlength="120" {% if item %}value="{{ item.Desc }}" {% endif %}>
+      <input type="text" class="form-control" id="ProgramInputDesc" name="ProgramInputDesc" placeholder="简单描述" maxlength="128" {% if item %}value="{{ item.Desc }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="ProgramInputAddon" class="col-sm-2 control-label">Addon</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="ProgramInputAddon" name="ProgramInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
+      <input type="text" class="form-control" id="ProgramInputAddon" name="ProgramInputAddon" placeholder="自动生成" {% if item %}value="{{ item.Addon }}" {% endif %} readonly>
     </div>
   </div>
 

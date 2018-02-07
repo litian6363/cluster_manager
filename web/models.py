@@ -40,11 +40,11 @@ class Config(db.Model):
 
     ID = db.Column(db.Integer, primary_key=True)
     DBID = db.Column(db.Integer, db.ForeignKey('db.ID'), nullable=False)
+    TypeID = db.Column(db.Integer, db.ForeignKey('type.ID'), nullable=False)
     KafkaHostID = db.Column(db.Integer, db.ForeignKey('kafkahost.ID'), nullable=False)
     KafkaID = db.Column(db.Integer, db.ForeignKey('kafka.ID'), nullable=False)
     ProgramID = db.Column(db.Integer, db.ForeignKey('program.ID'), nullable=False)
     SSDBID = db.Column(db.Integer, db.ForeignKey('ssdb.ID'), nullable=False)
-    TypeID = db.Column(db.Integer, db.ForeignKey('type.ID'), nullable=False)
     Sign = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -60,6 +60,7 @@ class DB(db.Model):
     IP = db.Column(db.String(32), nullable=False)
     User = db.Column(db.String(16), nullable=False)
     Password = db.Column(db.String(32), nullable=False)
+    Name = db.Column(db.String(128), nullable=False)
     Desc = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -74,10 +75,10 @@ class Kafka(db.Model):
     HostID = db.Column(db.Integer, db.ForeignKey('kafkahost.ID'), nullable=False)
     CustomerTopic = db.Column(db.String(32), nullable=False)
     ProducerTopic = db.Column(db.String(32), nullable=False)
-    AnalyzeTopic = db.Column(db.String(32), nullable=False)
+    AnalyzeTopic = db.Column(db.String(32))
     GroupName = db.Column(db.String(32), nullable=False)
-    AutoCommit = db.Column(db.Integer, default=0, nullable=False)
-    FromBegin = db.Column(db.Integer, default=0, nullable=False)
+    AutoCommit = db.Column(db.SMALLINT, default=0, nullable=False)
+    FromBegin = db.Column(db.SMALLINT, default=0, nullable=False)
     Desc = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -101,10 +102,13 @@ class Program(db.Model):
     __tablename__ = 'program'
 
     ID = db.Column(db.Integer, primary_key=True)
+    Day = db.Column(db.SMALLINT, nullable=False)
     MaxKwsCount = db.Column(db.Integer, nullable=False)
     MaxEntityCount = db.Column(db.Integer, nullable=False)
     Expired = db.Column(db.Integer, nullable=False)
-    SSDBExpired = db.Column(db.Integer, nullable=False)
+    SSDBExpired = db.Column(db.Integer)
+    SkipSiteTypes = db.Column(db.String(128))
+    IsNeedStatistic = db.Column(db.SMALLINT, default=0, nullable=False)
     Desc = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -117,6 +121,7 @@ class SSDB(db.Model):
 
     ID = db.Column(db.Integer, primary_key=True)
     LANIP = db.Column(db.String(32), nullable=False)
+    Port = db.Column(db.Integer, nullable=False)
     Desc = db.Column(db.String(120), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 
@@ -128,7 +133,7 @@ class Type(db.Model):
     __tablename__ = 'type'
 
     ID = db.Column(db.Integer, primary_key=True)
-    Code = db.Column(db.Integer, nullable=False)
+    Code = db.Column(db.SMALLINT, nullable=False)
     Desc = db.Column(db.String(128), nullable=False)
     Addon = db.Column(db.TIMESTAMP, nullable=False)
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-处理 配置工具 里面的url
+处理 配置工具 里面的路由
 """
 
 __author__ = 'LiTian'
@@ -162,7 +162,9 @@ def db_modify():
     DBInputIP = request.form.get('DBInputIP')
     DBInputUser = request.form.get('DBInputUser')
     DBInputPassword = request.form.get('DBInputPassword')
+    DBInputName = request.form.get('DBInputName')
     # AES加密password
+    aes_DBInputPassword = ''
     if DBInputPassword:
         my_aes = MyAES(app.config['AES_KEY'], app.config['AES_IV'])
         aes_DBInputPassword = my_aes.my_encrypt(DBInputPassword)
@@ -172,11 +174,12 @@ def db_modify():
         old_db.LANIP = DBInputLANIP
         old_db.IP = DBInputIP
         old_db.User = DBInputUser
-        if DBInputPassword:
+        if aes_DBInputPassword:
             old_db.Password = aes_DBInputPassword
+        old_db.Name = DBInputName
         old_db.Desc = DBInputDesc
     else:
-        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=aes_DBInputPassword, Desc=DBInputDesc, Addon=datetime.now())
+        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=aes_DBInputPassword, Name=DBInputName, Desc=DBInputDesc, Addon=datetime.now())
         db.session.add(new_db)
 
 
@@ -226,22 +229,29 @@ def kafkahost_modify():
 def program_modify():
     """Program表表单处理"""
     ProgramInputID = request.form.get('ProgramInputID')
+    ProgramInputDay = request.form.get('ProgramInputDay')
     ProgramInputMaxKwsCount = request.form.get('ProgramInputMaxKwsCount')
     ProgramInputMaxEntityCount = request.form.get('ProgramInputMaxEntityCount')
     ProgramInputExpired = request.form.get('ProgramInputExpired')
     ProgramInputSSDBExpired = request.form.get('ProgramInputSSDBExpired')
+    ProgramInputSkipSiteTypes = request.form.get('ProgramInputSkipSiteTypes')
+    ProgramInputIsNeedStatistic = request.form.get('ProgramInputIsNeedStatistic')
     ProgramInputDesc = request.form.get('ProgramInputDesc')
     old_program = Program.query.filter_by(ID=ProgramInputID).first()
     if old_program:
+        old_program.Day = ProgramInputDay
         old_program.MaxKwsCount = ProgramInputMaxKwsCount
         old_program.MaxEntityCount = ProgramInputMaxEntityCount
         old_program.Expired = ProgramInputExpired
         old_program.SSDBExpired = ProgramInputSSDBExpired
+        old_program.SkipSiteTypes = ProgramInputSkipSiteTypes
+        old_program.IsNeedStatistic = ProgramInputIsNeedStatistic
         old_program.Desc = ProgramInputDesc
     else:
-        new_program = Program(MaxKwsCount=ProgramInputMaxKwsCount, MaxEntityCount=ProgramInputMaxEntityCount,
-                              Expired=ProgramInputExpired, SSDBExpired=ProgramInputSSDBExpired,
-                              Desc=ProgramInputDesc, Addon=datetime.now())
+        new_program = Program(Day=ProgramInputDay, MaxKwsCount=ProgramInputMaxKwsCount,
+                              MaxEntityCount=ProgramInputMaxEntityCount, Expired=ProgramInputExpired,
+                              SSDBExpired=ProgramInputSSDBExpired, SkipSiteTypes=ProgramInputSkipSiteTypes,
+                              IsNeedStatistic=ProgramInputIsNeedStatistic, Desc=ProgramInputDesc, Addon=datetime.now())
         db.session.add(new_program)
 
 
@@ -249,13 +259,15 @@ def ssdb_modify():
     """SSDB表表单处理"""
     SSDBInputID = request.form.get('SSDBInputID')
     SSDBInputLANIP = request.form.get('SSDBInputLANIP')
+    SSDBInputPort = request.form.get('SSDBInputPort')
     SSDBInputDesc = request.form.get('SSDBInputDesc')
     old_ssdb = SSDB.query.filter_by(ID=SSDBInputID).first()
     if old_ssdb:
         old_ssdb.LANIP = SSDBInputLANIP
+        old_ssdb.Port = SSDBInputPort
         old_ssdb.Desc = SSDBInputDesc
     else:
-        new_ssdb = SSDB(LANIP=SSDBInputLANIP, Desc=SSDBInputDesc, Addon=datetime.now())
+        new_ssdb = SSDB(LANIP=SSDBInputLANIP,Port = SSDBInputPort, Desc=SSDBInputDesc, Addon=datetime.now())
         db.session.add(new_ssdb)
 
 
