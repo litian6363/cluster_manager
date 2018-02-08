@@ -14,8 +14,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost:3306/cluster_man?charset=utf8'
     COOKIE_NAME = 'YunrunClusterManagerSessionName'
     SALT = 'add@2some#t6salts!'  # 数据库加密用到的salt
-    AES_KEY = 'Test AES KEY 123'  # AES加密，key和iv长度必须是( 16,24,32 )其中之一
-    AES_IV = 'Test AES IV 1234'
+    AES_KEY = 'Test8AES8KEY8123'  # AES加密，key和iv长度必须是( 16,24,32 )其中之一
+    AES_IV = 'Test8AES8IV81234'
     SQLALCHEMY_BINDS = {  # 多数据库设置
         'cluster_user': 'mysql://root:root@localhost:3306/cluster_user?charset=utf8'
     }
