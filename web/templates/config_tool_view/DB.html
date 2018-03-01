@@ -34,8 +34,8 @@
                     <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
                     <td>
-                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}"><button>编辑</button></a>
+                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}"><button>删除</button></a>
                     </td>
                 </tr>
             {% endfor %}

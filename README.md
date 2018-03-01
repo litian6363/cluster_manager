@@ -1,1 +1,20 @@
 # YunrunClusterManager
+
+
+需要安装的
+python (3.6.3)
+MySQL Community Server (5.7.20)
+
+以下所有模块都可以使用 pip install XXX 来安装（例如： pip install Flask）(括号后面是开发时的版本号，部署时版本高点也没问题)
+Flask (0.12.2)
+Sqlalchemy (1.1.15)
+flask-sqlalchemy (2.3.2)
+pycryptodome(3.4.7)
+
+
+如果出现错误：No module named MySQLdb 的话，还需要：
+pip install mysqlclient (1.3.12)
+若安装mysqlclinent失败，错误：OSError: mysql_config not found
+# apt-get install libmysqlclient-dev
+若出现error: command 'x86_64-linux-gnu-gcc' failed with exit status 1：
+# apt-get install python3-dev

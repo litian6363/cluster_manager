@@ -17,6 +17,7 @@
                 <th>Kafka</th>
                 <th>Program</th>
                 <th>SSDB</th>
+                <th>HistorySSDB</th>
                 <th>Sign</th>
                 <th>Addon</th>
             </tr>
@@ -25,18 +26,19 @@
         <tbody>
             {% for row in data_list %}
             <tr>
-                <td>{{ row['ID'] }}</td>
-                <td>{{ row['DB'] }}</td>
-                <td>{{ row['Type'] }}</td>
-                <td>{{ row['KafkaHost'] }}</td>
-                <td>{{ row['Kafka'] }}</td>
-                <td>{{ row['Program'] }}</td>
-                <td>{{ row['SSDB'] }}</td>
+                <td>{{ row['ID']}}</td>
+                <td>{{ row['DB']['Desc'] }}</td>
+                <td>{{ row['Type']['Desc'] }}</td>
+                <td>{{ row['KafkaHost']['Desc'] }}</td>
+                <td>{{ row['Kafka']['Desc'] }}</td>
+                <td>{{ row['Program']['Desc'] }}</td>
+                <td>{{ row['SSDB']['Desc'] }}</td>
+                <td>{{ row['HistorySSDB']['Desc'] }}</td>
                 <td>{{ row['Sign'] }}</td>
                 <td>{{ row['Addon'] }}</td>
                 <td>
-                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row['ID']) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row['ID']) }}">删除</a>
+                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row['ID']) }}"><button>编辑</button></a>
+                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row['ID']) }}"><button>删除</button></a>
                 </td>
             </tr>
             {% endfor %}

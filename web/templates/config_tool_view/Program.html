@@ -13,12 +13,15 @@
             <tr>
                 <th>ID</th>
                 <th>Day</th>
-                <th>MaxKwsCount</th>
-                <th>MaxEntityCount</th>
+                <th>MaxKws<br/>Count</th>
+                <th>MaxEntity<br/>Count</th>
                 <th>Expired</th>
-                <th>SSDBExpired</th>
-                <th>SkipSiteTypes</th>
-                <th>IsNeedStatistic</th>
+                <th>SSDB<br/>Expired</th>
+                <th>HSSDB<br/>Expired</th>
+                <th>SkipSite<br/>Types</th>
+                <th>IsNeed<br/>Statistic</th>
+                <th>IsNeedDB</th>
+                <th>SaveUnfit</th>
                 <th>Desc</th>
                 <th>Addon</th>
             </tr>
@@ -33,13 +36,16 @@
                     <td>{{ row.MaxEntityCount }}</td>
                     <td>{{ row.Expired }}</td>
                     <td>{{ row.SSDBExpired }}</td>
+                    <td>{{ row.HSSDBExpired }}</td>
                     <td>{{ row.SkipSiteTypes }}</td>
                     <td>{{ row.IsNeedStatistic }}</td>
+                    <td>{{ row.IsNeedDB }}</td>
+                    <td>{{ row.SaveUnfit }}</td>
                     <td>{{ row.Desc }}</td>
                     <td>{{ row.Addon }}</td>
                     <td>
-                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}">编辑</a>&nbsp&nbsp
-                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}">删除</a>
+                    <a href="{{ url_for('configtool.config_modify', table=table, item_id=row.ID) }}"><button>编辑</button></a>
+                    <a href="{{ url_for('configtool.config_delete', table=table, item_id=row.ID) }}"><button>删除</button></a>
                     </td>
                 </tr>
             {% endfor %}

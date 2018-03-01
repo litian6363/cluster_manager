@@ -23,13 +23,12 @@ class MyAES:
         self.key = bytes(key, encoding='utf8')
         self.iv = bytes(iv, encoding='utf8')
         self.mode = AES.MODE_CBC
-        self.padding = ''
 
     def my_encrypt(self, text):
         """加密函数"""
         # 这里密钥key 长度必须为16（AES-128）、24（AES-192）、或32（AES-256）
         my_aes = AES.new(self.key, self.mode, self.iv)
-        # 如果text不是16的倍数，那就使用PKCS5Padding来为text填充（例如缺6位，则补6个6）
+        # 如果AES加密的text不是16的倍数，那就使用PKCS5Padding来为text填充（例如缺6位，则补6个6），如果刚好是16的倍数，则补16个bytes的16
         length = 16
         count = len(text)
         self.padding = length - (count % length)

@@ -87,6 +87,7 @@ def recreate_database_and_admin(app, admin_password='123456', delect_table=False
     if delect_table is True:
         db.drop_all(app=app)
     db.create_all(app=app)
+    db.reflect()
     sha1_password = '%s:%s:%s' % ('admin', admin_password, app.config['SALT'])
     last_password = hashlib.sha1(sha1_password.encode('utf-8')).hexdigest()
     new_use = Users(UserName='admin', Password=last_password, CreateDate=datetime.now())

@@ -32,13 +32,16 @@ def config_tool(table):
     pagination = tables[table].query.paginate(page, per_page=10, error_out=False)
     if table == 'Config':
         data_list = list(map(lambda r: r.to_dict(), pagination.items))  # 将sqlalchemy查询结果转换成dict
-        for row in data_list:  # 将ID转换成对应的描述
-            row['DB'] = str(row['DBID']) + ':' + DB.query.filter_by(ID=row['DBID']).first().Desc
-            row['KafkaHost'] = str(row['KafkaHostID']) + ':' + KafkaHost.query.filter_by(ID=row['KafkaHostID']).first().Desc
-            row['Kafka'] = str(row['KafkaID']) + ':' + Kafka.query.filter_by(ID=row['KafkaID']).first().Desc
-            row['Program'] = str(row['ProgramID']) + ':' + Program.query.filter_by(ID=row['ProgramID']).first().Desc
-            row['SSDB'] = str(row['SSDBID']) + ':' + SSDB.query.filter_by(ID=row['SSDBID']).first().Desc
-            row['Type'] = str(row['TypeID']) + ':' + Type.query.filter_by(ID=row['TypeID']).first().Desc
+        for row in data_list:  # 将ID转换成对应表的sqlalchemy对象，然后将对象转变为dict
+            row['DB'] = DB.query.filter_by(ID=row['DBID']).first().to_dict()
+            row['KafkaHost'] = KafkaHost.query.filter_by(ID=row['KafkaHostID']).first().to_dict()
+            row['Kafka'] = Kafka.query.filter_by(ID=row['KafkaID']).first().to_dict()
+            row['Program'] = Program.query.filter_by(ID=row['ProgramID']).first().to_dict()
+            row['SSDB'] = SSDB.query.filter_by(ID=row['SSDBID']).first()
+            row['HistorySSDB'] = SSDB.query.filter_by(ID=row['HistorySSDBID']).first()
+            if row['SSDB']:
+                row['SSDB'] = row['SSDB'].to_dict()
+            row['Type'] = Type.query.filter_by(ID=row['TypeID']).first().to_dict()
         return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
 
     elif table == 'Kafka':
@@ -137,6 +140,9 @@ def congig_modify():
     ConfigInputKafkaID = request.form.get('ConfigInputKafkaID')
     ConfigInputProgramID = request.form.get('ConfigInputProgramID')
     ConfigInputSSDBID = request.form.get('ConfigInputSSDBID')
+    if not ConfigInputSSDBID:
+        ConfigInputSSDBID = None
+    ConfigInputHistorySSDBID = request.form.get('ConfigInputHistorySSDBID')
     ConfigInputTypeID = request.form.get('ConfigInputTypeID')
     ConfigInputSign = request.form.get('ConfigInputSign')
     old_config = Config.query.filter_by(ID=ConfigInputID).first()
@@ -147,10 +153,11 @@ def congig_modify():
         old_config.ProgramID = ConfigInputProgramID
         old_config.TypeID = ConfigInputTypeID
         old_config.SSDBID = ConfigInputSSDBID
+        old_config.HistorySSDBID = ConfigInputHistorySSDBID
         old_config.Sign = ConfigInputSign
     else:  # 否则就是新增
         new_config = Config(DBID=ConfigInputDBID, KafkaHostID=ConfigInputKafkaHostID, KafkaID=ConfigInputKafkaID,
-                            ProgramID=ConfigInputProgramID, SSDBID=ConfigInputSSDBID, TypeID=ConfigInputTypeID,
+                            ProgramID=ConfigInputProgramID, SSDBID=ConfigInputSSDBID, HistorySSDBID=ConfigInputHistorySSDBID, TypeID=ConfigInputTypeID,
                             Sign=ConfigInputSign, Addon=datetime.now())
         db.session.add(new_config)
 
@@ -164,7 +171,6 @@ def db_modify():
     DBInputPassword = request.form.get('DBInputPassword')
     DBInputName = request.form.get('DBInputName')
     # AES加密password
-    aes_DBInputPassword = ''
     if DBInputPassword:
         my_aes = MyAES(app.config['AES_KEY'], app.config['AES_IV'])
         aes_DBInputPassword = my_aes.my_encrypt(DBInputPassword)
@@ -174,7 +180,7 @@ def db_modify():
         old_db.LANIP = DBInputLANIP
         old_db.IP = DBInputIP
         old_db.User = DBInputUser
-        if aes_DBInputPassword:
+        if DBInputPassword:
             old_db.Password = aes_DBInputPassword
         old_db.Name = DBInputName
         old_db.Desc = DBInputDesc
@@ -234,8 +240,11 @@ def program_modify():
     ProgramInputMaxEntityCount = request.form.get('ProgramInputMaxEntityCount')
     ProgramInputExpired = request.form.get('ProgramInputExpired')
     ProgramInputSSDBExpired = request.form.get('ProgramInputSSDBExpired')
+    ProgramInputHSSDBExpired = request.form.get('ProgramInputHSSDBExpired')
     ProgramInputSkipSiteTypes = request.form.get('ProgramInputSkipSiteTypes')
     ProgramInputIsNeedStatistic = request.form.get('ProgramInputIsNeedStatistic')
+    ProgramInputIsNeedDB = request.form.get('ProgramInputIsNeedDB')
+    ProgramInputSaveUnfit = request.form.get('ProgramInputSaveUnfit')
     ProgramInputDesc = request.form.get('ProgramInputDesc')
     old_program = Program.query.filter_by(ID=ProgramInputID).first()
     if old_program:
@@ -244,14 +253,19 @@ def program_modify():
         old_program.MaxEntityCount = ProgramInputMaxEntityCount
         old_program.Expired = ProgramInputExpired
         old_program.SSDBExpired = ProgramInputSSDBExpired
+        old_program.HSSDBExpired = ProgramInputHSSDBExpired
         old_program.SkipSiteTypes = ProgramInputSkipSiteTypes
         old_program.IsNeedStatistic = ProgramInputIsNeedStatistic
+        old_program.IsNeedDB = ProgramInputIsNeedDB
+        old_program.SaveUnfit = ProgramInputSaveUnfit
         old_program.Desc = ProgramInputDesc
     else:
         new_program = Program(Day=ProgramInputDay, MaxKwsCount=ProgramInputMaxKwsCount,
                               MaxEntityCount=ProgramInputMaxEntityCount, Expired=ProgramInputExpired,
-                              SSDBExpired=ProgramInputSSDBExpired, SkipSiteTypes=ProgramInputSkipSiteTypes,
-                              IsNeedStatistic=ProgramInputIsNeedStatistic, Desc=ProgramInputDesc, Addon=datetime.now())
+                              SSDBExpired=ProgramInputSSDBExpired, HSSDBExpired = ProgramInputHSSDBExpired,
+                              SkipSiteTypes=ProgramInputSkipSiteTypes,IsNeedStatistic=ProgramInputIsNeedStatistic,
+                              IsNeedDB=ProgramInputIsNeedDB, SaveUnfit = ProgramInputSaveUnfit,
+                              Desc=ProgramInputDesc, Addon=datetime.now())
         db.session.add(new_program)
 
 

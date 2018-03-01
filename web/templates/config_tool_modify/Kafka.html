@@ -25,21 +25,21 @@
   <div class="form-group">
     <label for="KafkaInputCustomerTopic" class="col-sm-2 control-label">获取数据的Topic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic" maxlength="32" {% if item %}value="{{ item.CustomerTopic }}" {% endif %} required>
+      <input type="text" class="form-control" id="KafkaInputCustomerTopic" name="KafkaInputCustomerTopic" placeholder="获取数据的Topic" maxlength="256" {% if item %}value="{{ item.CustomerTopic }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputProducerTopic" class="col-sm-2 control-label">发送数据的Topic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic" maxlength="32" {% if item %}value="{{ item.ProducerTopic }}" {% endif %} required>
+      <input type="text" class="form-control" id="KafkaInputProducerTopic" name="KafkaInputProducerTopic" placeholder="发送数据的Topic" maxlength="256" {% if item %}value="{{ item.ProducerTopic }}" {% endif %} required>
     </div>
   </div>
 
   <div class="form-group">
     <label for="KafkaInputAnalyzeTopic" class="col-sm-2 control-label">发送统计数据的Topic</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic" maxlength="32" {% if item %}value="{{ item.AnalyzeTopic }}" {% endif %}>
+      <input type="text" class="form-control" id="KafkaInputAnalyzeTopic" name="KafkaInputAnalyzeTopic" placeholder="发送统计数据的Topic" maxlength="256" {% if item %}value="{{ item.AnalyzeTopic }}" {% endif %}>
     </div>
   </div>
 
@@ -54,11 +54,11 @@
     <label class="col-sm-2 control-label">是否自动提交</label>
     <div class="radio col-sm-10">
       <label>
-        <input type="radio" name="KafkaInputAutoCommit" id="option1" value=0 {% if item %}{% if item.AutoCommit == 0 %} checked {% endif %}{% endif %}>
+        <input type="radio" name="KafkaInputAutoCommit" id="AutoCommitoption1" value=0 {% if item %}{% if item.AutoCommit == 0 %} checked {% endif %}{% endif %}>
         否
       </label>
       <label>
-        <input type="radio" name="KafkaInputAutoCommit" id="option2" value=1 {% if not item %} checked {% endif %} {% if item %}{% if item.AutoCommit == 1 %} checked {% endif %}{% endif %}>
+        <input type="radio" name="KafkaInputAutoCommit" id="AutoCommitoption2" value=1 {% if not item %} checked {% endif %} {% if item %}{% if item.AutoCommit == 1 %} checked {% endif %}{% endif %}>
         是
       </label>
     </div>
@@ -68,11 +68,11 @@
     <label class="col-sm-2 control-label">是否从头开始</label>
     <div class="radio col-sm-10">
       <label>
-        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption1" value=0 {% if item %}{% if item.FromBegin == 0 %} checked {% endif %}{% endif %}>
+        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption1" value=0 checked>
         否
       </label>
       <label>
-        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption2" value=1 {% if not item %} checked {% endif %} {% if item %}{% if item.FromBegin == 1 %} checked {% endif %}{% endif %}>
+        <input type="radio" name="KafkaInputFromBegin" id="FromBeginOption2" value=1 {% if item %}{% if item.FromBegin == 1 %} checked {% endif %}{% endif %}>
         是
       </label>
     </div>
