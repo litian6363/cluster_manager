@@ -10,7 +10,7 @@ from .models import db
 from config import configs
 
 app = Flask(__name__)
-# 载入配置，在这里选择启动什么配置
+# 载入配置
 app.config.from_object(configs['use'])
 
 # flask-sqlalchemy的数据库配置
