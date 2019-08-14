@@ -10,10 +10,9 @@ Flask (0.12.2)
 Sqlalchemy (1.1.15)
 flask-sqlalchemy (2.3.2)
 pycryptodome(3.4.7)
+mysqlclient (1.3.12)
 
-
-如果出现错误：No module named MySQLdb 的话，还需要：
-pip install mysqlclient (1.3.12)
+# pip install -r requirement.txt
 若安装mysqlclinent失败，错误：OSError: mysql_config not found
 # apt-get install libmysqlclient-dev
 若出现error: command 'x86_64-linux-gnu-gcc' failed with exit status 1：

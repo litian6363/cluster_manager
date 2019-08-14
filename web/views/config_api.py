@@ -26,9 +26,9 @@ def re_config_all():
 @mod.route('/<int:config_id>')
 def re_config_one(config_id):
     """返回加密后的单个config表信息"""
-    config_dict = make_config_dict(config_id)
-    if config_dict:
-        aes = MyAES(app.config['AES_KEY'], app.config['AES_IV'])
-        return aes.my_encrypt(str(config_dict))
-    else:
-        return 'Null config dict!!!'
+    try:
+        config_dict = make_config_dict(config_id)
+    except Exception as e:
+        return str(e)
+    aes = MyAES(app.config['AES_KEY'], app.config['AES_IV'])
+    return aes.my_encrypt(str(config_dict))

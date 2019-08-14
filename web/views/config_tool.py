@@ -16,7 +16,6 @@ from web import app
 
 mod = Blueprint('configtool', __name__, url_prefix='/configtool')
 
-
 tables = {'Config': Config, 'DB': DB, 'Kafka': Kafka, 'KafkaHost': KafkaHost,
           'Program': Program, 'SSDB': SSDB, 'Type': Type}
 
@@ -42,7 +41,8 @@ def config_tool(table):
             if row['SSDB']:
                 row['SSDB'] = row['SSDB'].to_dict()
             row['Type'] = Type.query.filter_by(ID=row['TypeID']).first().to_dict()
-        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
+        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list,
+                               pagination=pagination)
 
     elif table == 'Kafka':
         data_list = list(map(lambda r: r.to_dict(), pagination.items))  # 将sqlalchemy查询结果转换成dict
@@ -53,7 +53,8 @@ def config_tool(table):
 
     else:
         data_list = pagination.items
-        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list, pagination=pagination)
+        return render_template('config_tool_view/%s.html' % table, table=table, data_list=data_list,
+                               pagination=pagination)
 
 
 @mod.route('/<table>/add', methods=['GET'])
@@ -67,7 +68,7 @@ def config_add(table):
         return render_template('config_tool_modify/%s.html' % table, table=table, kafkahost_all=KafkaHost.query.all())
     elif table == 'Config':
         tables_query = {'DB': DB.query.all(), 'KafkaHost': KafkaHost.query.all(), 'Kafka': Kafka.query.all(),
-                      'Program': Program.query.all(), 'SSDB': SSDB.query.all(), 'Type': Type.query.all()}
+                        'Program': Program.query.all(), 'SSDB': SSDB.query.all(), 'Type': Type.query.all()}
         return render_template('config_tool_modify/%s.html' % table, table=table, tables_query=tables_query)
     else:
         return render_template('config_tool_modify/%s.html' % table, table=table)
@@ -98,8 +99,9 @@ def config_modify(table, item_id):
                                kafkahost_all=KafkaHost.query.all(), item=modify_item)
     elif table == 'Config':
         tables_query = {'DB': DB.query.all(), 'KafkaHost': KafkaHost.query.all(), 'Kafka': Kafka.query.all(),
-                      'Program': Program.query.all(), 'SSDB': SSDB.query.all(), 'Type': Type.query.all()}
-        return render_template('config_tool_modify/%s.html' % table, table=table, tables_query=tables_query, item=modify_item)
+                        'Program': Program.query.all(), 'SSDB': SSDB.query.all(), 'Type': Type.query.all()}
+        return render_template('config_tool_modify/%s.html' % table, table=table, tables_query=tables_query,
+                               item=modify_item)
     else:
         return render_template('config_tool_modify/%s.html' % table, table=table, item=modify_item)
 
@@ -157,7 +159,8 @@ def congig_modify():
         old_config.Sign = ConfigInputSign
     else:  # 否则就是新增
         new_config = Config(DBID=ConfigInputDBID, KafkaHostID=ConfigInputKafkaHostID, KafkaID=ConfigInputKafkaID,
-                            ProgramID=ConfigInputProgramID, SSDBID=ConfigInputSSDBID, HistorySSDBID=ConfigInputHistorySSDBID, TypeID=ConfigInputTypeID,
+                            ProgramID=ConfigInputProgramID, SSDBID=ConfigInputSSDBID,
+                            HistorySSDBID=ConfigInputHistorySSDBID, TypeID=ConfigInputTypeID,
                             Sign=ConfigInputSign, Addon=datetime.now())
         db.session.add(new_config)
 
@@ -185,7 +188,8 @@ def db_modify():
         old_db.Name = DBInputName
         old_db.Desc = DBInputDesc
     else:
-        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=aes_DBInputPassword, Name=DBInputName, Desc=DBInputDesc, Addon=datetime.now())
+        new_db = DB(LANIP=DBInputLANIP, IP=DBInputIP, User=DBInputUser, Password=aes_DBInputPassword, Name=DBInputName,
+                    Desc=DBInputDesc, Addon=datetime.now())
         db.session.add(new_db)
 
 
@@ -262,9 +266,9 @@ def program_modify():
     else:
         new_program = Program(Day=ProgramInputDay, MaxKwsCount=ProgramInputMaxKwsCount,
                               MaxEntityCount=ProgramInputMaxEntityCount, Expired=ProgramInputExpired,
-                              SSDBExpired=ProgramInputSSDBExpired, HSSDBExpired = ProgramInputHSSDBExpired,
-                              SkipSiteTypes=ProgramInputSkipSiteTypes,IsNeedStatistic=ProgramInputIsNeedStatistic,
-                              IsNeedDB=ProgramInputIsNeedDB, SaveUnfit = ProgramInputSaveUnfit,
+                              SSDBExpired=ProgramInputSSDBExpired, HSSDBExpired=ProgramInputHSSDBExpired,
+                              SkipSiteTypes=ProgramInputSkipSiteTypes, IsNeedStatistic=ProgramInputIsNeedStatistic,
+                              IsNeedDB=ProgramInputIsNeedDB, SaveUnfit=ProgramInputSaveUnfit,
                               Desc=ProgramInputDesc, Addon=datetime.now())
         db.session.add(new_program)
 
@@ -281,7 +285,7 @@ def ssdb_modify():
         old_ssdb.Port = SSDBInputPort
         old_ssdb.Desc = SSDBInputDesc
     else:
-        new_ssdb = SSDB(LANIP=SSDBInputLANIP,Port = SSDBInputPort, Desc=SSDBInputDesc, Addon=datetime.now())
+        new_ssdb = SSDB(LANIP=SSDBInputLANIP, Port=SSDBInputPort, Desc=SSDBInputDesc, Addon=datetime.now())
         db.session.add(new_ssdb)
 
 

@@ -51,7 +51,7 @@ def cookie2user(key, cookie, remote_addr):
 
 
 def check_user_cookie(re):
-    """装饰器,用cookie来检查用户登录，每次request都检查"""
+    """装饰器,用cookie来检查用户登录"""
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*arg, **kw):

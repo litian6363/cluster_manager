@@ -2,5 +2,5 @@ Flask
 Sqlalchemy
 flask-sqlalchemy
 pycryptodome
-mysqlclient
 gevent
+mysqlclient
