@@ -262,6 +262,7 @@ __pycache__/
 .vs/
 .vscode/
 env/
+venv/
 
 my python habit
 test*.py
