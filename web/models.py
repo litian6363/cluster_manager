@@ -7,7 +7,6 @@
 
 __author__ = 'LiTian'
 
-
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
@@ -143,4 +142,3 @@ class Type(db.Model):
 
     def __repr__(self):
         return '<Type %r>' % self.Desc
-
