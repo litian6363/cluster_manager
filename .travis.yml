@@ -5,6 +5,7 @@ python: "3.6"
 before_install:
   - sudo apt-get install python3-dev
   - sudo apt-get install libmysqlclient-dev
-  - sudo mysql -e 'CREATE DATABASE wechat_ticket;'
+  - sudo mysql -e 'CREATE DATABASE cluster;'
+  - sudo mysql -e 'CREATE DATABASE cluster_user;'
 install: pip install -r requirements.txt
 script: python run.py

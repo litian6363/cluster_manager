@@ -17,7 +17,7 @@ class Config(object):
     AES_KEY = 'Test8AES8KEY8123'  # AES加密，key和iv长度必须是( 16,24,32 )其中之一
     AES_IV = 'Test8AES8IV81234'
     SQLALCHEMY_BINDS = {  # 多数据库设置
-        'cluster_user': 'mysql://root:root@127.0.0.1:3306/cluster_user?charset=utf8'
+        'cluster_user': 'mysql://travis@127.0.0.1:3306/cluster_user?charset=utf8'
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 跟踪对象修改，生产部署时要关闭
     SQLALCHEMY_POOL_TIMEOUT = 3  # 连接池超时秒数
