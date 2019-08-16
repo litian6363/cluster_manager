@@ -20,7 +20,7 @@ class Config(object):
         'cluster_user': 'mysql://travis@127.0.0.1:3306/cluster_user?charset=utf8'
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 跟踪对象修改，生产部署时要关闭
-    SQLALCHEMY_POOL_TIMEOUT = 3  # 连接池超时秒数
+    SQLALCHEMY_ENGINE_OPTIONS = {'pool_timeout': 3}  # 连接池超时秒数
 
 
 class ProductionConfig(Config):

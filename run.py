@@ -3,8 +3,8 @@
 
 __author__ = 'LiTian'
 
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 
 from web import app
 
