@@ -24,6 +24,8 @@ def test_index(myt_client):
 
 
 def test_user(myt_client):
+    from web.tools.cookie_factory import recreate_database_and_admin
+    recreate_database_and_admin(app, admin_password='123456', delect_table=True)  # 重建数据库和创建管理员
     rv = myt_client.post('/user/login', data={'username': 'root', 'password': '123456'}, follow_redirects=True)
     print(rv.data)
     assert rv.status_code == 200
