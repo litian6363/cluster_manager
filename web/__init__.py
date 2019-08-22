@@ -8,6 +8,9 @@
 from flask import Flask
 from .models import db
 from config import configs
+import pymysql
+
+pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 # 载入配置

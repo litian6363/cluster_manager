@@ -13,7 +13,3 @@ pycryptodome(3.4.7)
 mysqlclient (1.3.12)
 
 # pip install -r requirement.txt
-若安装mysqlclinent失败，错误：OSError: mysql_config not found
-# apt-get install libmysqlclient-dev
-若出现error: command 'x86_64-linux-gnu-gcc' failed with exit status 1：
-# apt-get install python3-dev

@@ -3,6 +3,6 @@ Sqlalchemy
 flask-sqlalchemy
 pycryptodome
 gevent
-mysqlclient
 pytest
 coveralls
+pymysql
